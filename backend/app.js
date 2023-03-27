@@ -4,24 +4,34 @@ const ErrorHandler = require("./middleware/error");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fileUpload = require('express-fileupload')
+const user = require("./controller/user")
 
 
 // to echange data between server and client using json
 app.use(express.json());
 //to store cookies
 app.use(cookieParser());
+
+// to allow backend excepting data from globally bcoz we sent data from front end is at different port and backend is at different port
+app.use(cors());
+
+// to upload avatar and to access the uploads folder globally
+app.use("/",express.static("uploads"))
 // Body-parser parses is an HTTP request body that usually helps when you need to know more than just the URL being hit. Specifically in the context of a POST, PATCH, or PUT HTTP request where the information you want is contained in the body. Using body-parser allows you to access req.
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
-app.use(fileUpload({useTempFiles:true}));
+
 
 // Config
-if(process.env.NODE_ENV !== "PRODUCTION"){
+if(process.env.NODE_ENV !== "PRODUCTION"){ 
     require("dotenv").config({
         path:"backend/config/.env"
     })
 }
+
+
+// Routes
+app.use("/api/v2/user",user);
 
 // it's for ErrorHandling
 app.use(ErrorHandler);
