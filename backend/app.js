@@ -13,7 +13,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 // to allow backend excepting data from globally bcoz we sent data from front end is at different port and backend is at different port
-app.use(cors());
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+);
 
 // to upload avatar and to access the uploads folder globally
 app.use("/",express.static("uploads"))
