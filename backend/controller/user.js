@@ -9,6 +9,7 @@ const fs = require("fs")
 const jwt = require("jsonwebtoken")
 const sendMail = require("../utilis/sendMail")
 const sendToken = require("../utilis/jwtToken")
+const { isAuthenticated } = require('../middleware/auth');
 
 
 // Create-User (register)
@@ -210,10 +211,10 @@ router.post(
                 return next(new ErrorHandler("User already exists", 400));
             }
             user = await User.create({
-                name:name,
-                email:email,
-                password:password,
-                avatar:avatar
+                name: name,
+                email: email,
+                password: password,
+                avatar: avatar
             });
 
             sendToken(user, 201, res);
@@ -222,6 +223,63 @@ router.post(
         }
     })
 );
+
+
+
+// Login user (password for all user for test yash123)
+router.post("/login-user", catchAsyncErrors(async (req, res, next) => {
+    try {
+
+        // fetch details from body
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return next(new ErrorHandler("Please Provide All the fields!", 400));
+        }
+
+        // find user if exist of not
+        const user = await User.findOne({ email }).select("+password");
+
+        if (!user) {
+            return next(new ErrorHandler("User doesn't exists!", 400));
+        }
+
+        //  check is password is correct or not
+        const isValidPassword = await user.comparePassword(password);
+
+        if (!isValidPassword) {
+            return next(
+              new ErrorHandler("Please provide the correct information", 400)
+            );
+        }
+
+        // if everything is fine then simply send the token to the user
+        sendToken(user, 201, res);
+
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}));
+
+// Load user (means we refresh the page then user remian login)
+router.get("/getuser",isAuthenticated,catchAsyncErrors(async(req,res,next)=>{
+    try {
+        // fetch the user
+        const user = await User.findById(req.user.id);
+
+        if(!user){
+            return next(new ErrorHandler("User doesn't exists",400))
+        }
+
+        // if all good send success true and the user
+        res.status(200).json({
+            success:true,
+            user
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}))
 
 
 module.exports = router;

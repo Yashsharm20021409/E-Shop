@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // to allow backend excepting data from globally bcoz we sent data from front end is at different port and backend is at different port
+// if from this url we get any req our cookies get store that why we use this
 app.use(
     cors({
       origin: "http://localhost:3000",
