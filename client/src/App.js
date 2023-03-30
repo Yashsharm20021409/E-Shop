@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter ,Routes,Route} from "react-router-dom"
-import {LoginPage,SignupPage,ActivationPage} from "./RoutesLink.js"
+import {LoginPage,SignupPage,ActivationPage,HomePage,ProductDetailsPage ,ProductsPage,BestSellingPage,EventsPage,FAQPage,} from "./RoutesLink.js"
 import {ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 // import { server } from './server';
 import Store from './redux/store';
 import { loaduser } from './redux/actions/user';
+import { useSelector } from "react-redux";
 
 function App() {
 
@@ -21,17 +22,25 @@ function App() {
   //   .catch((err)=>{toast.error(err.response.data.message)});
   // },[])
 
+  const { loading } = useSelector((state) => state.user);
   useEffect(()=>{
     Store.dispatch(loaduser());
   },[]);
 
   return (
-    <div className="App">
+    <>
+    {loading ? null : (
       <BrowserRouter>
         <Routes>
-          <Route path='/login' element={<LoginPage />} > </Route>
-          <Route path='/sign-up' element={<SignupPage />} > </Route>
-          <Route path='/activation/:activation_token' element={<ActivationPage />} > </Route>
+          <Route path='/' element={<HomePage />} > </Route>
+          <Route exact path='/login' element={<LoginPage />} > </Route>
+          <Route exact path='/sign-up' element={<SignupPage />} > </Route>
+          <Route exact path='/activation/:activation_token' element={<ActivationPage />} > </Route>
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/product/:name" element={<ProductDetailsPage />} />
+          <Route path="/best-selling" element={<BestSellingPage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/faq" element={<FAQPage />} />
         </Routes>
         <ToastContainer
             position="bottom-center"
@@ -46,7 +55,8 @@ function App() {
             theme="dark"
           />
       </BrowserRouter>
-    </div>
+    )}
+    </>
   );
 }
 
