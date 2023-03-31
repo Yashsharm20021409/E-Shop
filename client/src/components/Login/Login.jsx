@@ -30,8 +30,8 @@ const Login = () => {
       .then((res) => {
         toast.success("Login Successfully!");
         navigate("/");
-        // when you reload the page it shows use icon in palace of your image at navbar for minor seconds only (ek trh se reload ho rha h)
-        window.location.reload();
+        // to reload page when user get logged in
+        window.location.reload(true);
       })
       .catch((err) => {
         toast.error(err.response.data.message);

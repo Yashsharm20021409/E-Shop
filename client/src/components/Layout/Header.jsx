@@ -189,7 +189,10 @@ const Header = ({ activeHeading }) => {
             </div>
 
             {/* cart popup */}
+            <div className="overflow-auto">
+
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+            </div>
 
             {/* wishlist popup */}
             {openWishlist ? (
