@@ -249,7 +249,7 @@ router.post("/login-user", catchAsyncErrors(async (req, res, next) => {
 
         if (!isValidPassword) {
             return next(
-              new ErrorHandler("Please provide the correct information", 400)
+                new ErrorHandler("Please provide the correct information", 400)
             );
         }
 
@@ -262,18 +262,18 @@ router.post("/login-user", catchAsyncErrors(async (req, res, next) => {
 }));
 
 // Load user (means we refresh the page then user remian login)
-router.get("/getuser",isAuthenticated,catchAsyncErrors(async(req,res,next)=>{
+router.get("/getuser", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
     try {
         // fetch the user
         const user = await User.findById(req.user.id);
 
-        if(!user){
-            return next(new ErrorHandler("User doesn't exists",400))
+        if (!user) {
+            return next(new ErrorHandler("User doesn't exists", 400))
         }
 
         // if all good send success true and the user
         res.status(200).json({
-            success:true,
+            success: true,
             user
         });
     } catch (error) {
@@ -281,5 +281,22 @@ router.get("/getuser",isAuthenticated,catchAsyncErrors(async(req,res,next)=>{
     }
 }))
 
+
+// logout the user
+router.get("/logout", catchAsyncErrors((req, res, next) => {
+    try {
+        // when we click on the logout button our cookies get null and we use window reload method in frontend(in logout section) due to user get logout
+        res.cookie("token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        })
+        res.status(201).json({
+            success: true,
+            message: "Log out successful!",
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}))
 
 module.exports = router;

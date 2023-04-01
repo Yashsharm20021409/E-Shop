@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter ,Routes,Route} from "react-router-dom"
-import {LoginPage,SignupPage,ActivationPage,HomePage,ProductDetailsPage ,ProductsPage,BestSellingPage,EventsPage,FAQPage,} from "./RoutesLink.js"
+import {LoginPage,SignupPage,ActivationPage,HomePage,ProductDetailsPage ,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProfilePage} from "./RoutesLink.js"
 import {ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import Store from './redux/store';
 import { loaduser } from './redux/actions/user';
 import { useSelector } from "react-redux";
+import ProtectedRoute from "./ProtectedRoute"
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
   //   .catch((err)=>{toast.error(err.response.data.message)});
   // },[])
 
-  const { loading } = useSelector((state) => state.user);
+  const { loading ,isAuthenticated} = useSelector((state) => state.user);
   useEffect(()=>{
     Store.dispatch(loaduser());
   },[]);
@@ -41,6 +42,9 @@ function App() {
           <Route path="/best-selling" element={<BestSellingPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          {/* to avoid access profile page (if !isAuthenticted redirect user to navigate otherwise navigate to children(Profile page)) */}
+          <Route path="/profile" element={ <ProtectedRoute isAuthenticated={isAuthenticated}> <ProfilePage /> </ProtectedRoute>}/>
+
         </Routes>
         <ToastContainer
             position="bottom-center"

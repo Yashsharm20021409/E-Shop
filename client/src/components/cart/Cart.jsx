@@ -98,7 +98,7 @@ const CartSingle = ({ data }) => {
                 US${totalPrice}
             </h4>
         </div>
-        <RxCross1 className="cursor-pointer" />
+        <RxCross1 className="cursor-pointer"/>
       </div>
     </div>
   );

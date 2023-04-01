@@ -6,7 +6,8 @@ import ProductsPage from "../src/pages/ProductsPage";
 import BestSellingPage from "../src/pages/BestSellingPage";
 import EventsPage from "../src/pages/EventsPage";
 import FAQPage from "../src/pages/FAQPage";
-import ProductDetailsPage from "../src/pages/ProductsDetailsPage.jsx";
+import ProductDetailsPage from "../src/pages/ProductsDetailsPage";
+import ProfilePage from "../src/pages/ProfilePage"
 
 
 // if we did export insted of export default we have to import all in {} where we want to use them
@@ -19,5 +20,6 @@ export {
     BestSellingPage,
     EventsPage,
     FAQPage,
-    ProductDetailsPage
+    ProductDetailsPage,
+    ProfilePage,
 }

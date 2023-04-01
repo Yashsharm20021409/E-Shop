@@ -29,9 +29,10 @@ const Login = () => {
       )
       .then((res) => {
         toast.success("Login Successfully!");
-        navigate("/");
         // to reload page when user get logged in
-        window.location.reload(true);
+        if(window.location.reload(true)){
+          navigate("/");
+        }
       })
       .catch((err) => {
         toast.error(err.response.data.message);
