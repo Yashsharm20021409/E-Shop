@@ -15,11 +15,6 @@ const Cart = ({ setOpenCart }) => {
     {
       name: "Iphone 14 pro max 256 gb ssd and 8gb ram sliver colour",
       description: "test",
-      price: 245,
-    },
-    {
-      name: "Iphone 14 pro max 256 gb ssd and 8gb ram sliver colour",
-      description: "test",
       price: 645,
     },
   ];

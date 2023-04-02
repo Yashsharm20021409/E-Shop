@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import { backend_url } from "../../server";
 import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
-import { RxCross1 } from "react-icons/rx";
+// import { RxCross1 } from "react-icons/rx";
 
 const Header = ({ activeHeading }) => {
   // fetch the Logged in user
@@ -29,7 +29,7 @@ const Header = ({ activeHeading }) => {
   const [dropDown, setDropDown] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   const handleSearchChange = (e) => {
     const term = e.target.value;
@@ -199,6 +199,12 @@ const Header = ({ activeHeading }) => {
               <Wishlist setOpenWishlist={setOpenWishlist} />
             ) : null}
           </div>
+
+          
+
+          
+          
+
         </div>
       </div>
     </>

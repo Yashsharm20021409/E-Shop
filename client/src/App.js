@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter ,Routes,Route} from "react-router-dom"
-import {LoginPage,SignupPage,ActivationPage,HomePage,ProductDetailsPage ,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProfilePage} from "./RoutesLink.js"
+import {LoginPage,SignupPage,ActivationPage,HomePage,ProductDetailsPage ,ProductsPage,BestSellingPage,EventsPage,FAQPage,ProfilePage, CheckoutPage,PaymentPage,OrderSuccessPage,ShopCreatePage} from "./RoutesLink.js"
 import {ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -42,9 +42,12 @@ function App() {
           <Route path="/best-selling" element={<BestSellingPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/checkout" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>}/>
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/order/success/:id" element={<OrderSuccessPage />} />
           {/* to avoid access profile page (if !isAuthenticted redirect user to navigate otherwise navigate to children(Profile page)) */}
           <Route path="/profile" element={ <ProtectedRoute isAuthenticated={isAuthenticated}> <ProfilePage /> </ProtectedRoute>}/>
-
+          <Route path="/shop-create" element={<ShopCreatePage/>}></Route>
         </Routes>
         <ToastContainer
             position="bottom-center"
