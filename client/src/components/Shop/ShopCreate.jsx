@@ -32,19 +32,18 @@ const ShopCreate = () => {
     newForm.append("address", address);
     newForm.append("phoneNumber", phoneNumber);
     // post request to send data to the backend
-    axios
-      .post(`${server}/shop/create-shop`, newForm, config)
+    axios.post(`${server}/shop/create-shop`, newForm, config)
       .then((res) => {
         // toast the response which we get from backend after submitting the data
         toast.success(res.data.message);
         // make all field empty
-        setName("");
-        setEmail("");
-        setPassword("");
-        setAvatar();
-        setZipCode();
-        setAddress("");
-        setPhoneNumber();
+        // setName("");
+        // setEmail("");
+        // setPassword("");
+        // setAvatar();
+        // setZipCode();
+        // setAddress("");
+        // setPhoneNumber();
       })
       .catch((error) => {
         toast.error(error.response.data.message);

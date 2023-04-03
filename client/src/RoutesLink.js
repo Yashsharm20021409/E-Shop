@@ -12,6 +12,8 @@ import CheckoutPage from "../src/pages/CheckoutPage";
 import PaymentPage from "../src/pages/PaymentPage";
 import OrderSuccessPage from "../src/pages/OrderSuccessPage";
 import ShopCreatePage from "../src/pages/ShopCreatePage" 
+import SellerActivationPage  from "../src/pages/SellerActivationPage"
+import ShopLoginPage from "../src/pages/ShopLoginPage"
 
 
 // if we did export insted of export default we have to import all in {} where we want to use them
@@ -29,5 +31,7 @@ export {
     CheckoutPage,
     PaymentPage,
     OrderSuccessPage,
-    ShopCreatePage
+    ShopCreatePage,
+    SellerActivationPage ,
+    ShopLoginPage
 }
