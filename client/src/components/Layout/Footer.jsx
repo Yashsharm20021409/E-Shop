@@ -14,8 +14,8 @@ import {
 
 const Footer = () => {
   return (
-    <div className="bg-[#000] text-white">
-      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7">
+    <div className="bg-[#1f3b3c] text-white">
+      <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#0e4345] py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
           <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
           <br />
@@ -45,18 +45,21 @@ const Footer = () => {
           <br />
           <p>The home and elements needeed to create beatiful products.</p>
           <div className="flex items-center mt-[15px]">
-            <AiFillFacebook size={25} className="cursor-pointer" />
+            <AiFillFacebook size={25} className="cursor-pointer hover:text-teal-400 duration-300" />
             <AiOutlineTwitter
               size={25}
               style={{ marginLeft: "15px", cursor: "pointer" }}
+              className="hover:text-teal-400 duration-300 cursor-pointer"
             />
             <AiFillInstagram
               size={25}
               style={{ marginLeft: "15px", cursor: "pointer" }}
+              className="hover:text-teal-400 duration-300 cursor-pointer"
             />
             <AiFillYoutube
               size={25}
               style={{ marginLeft: "15px", cursor: "pointer" }}
+              className="hover:text-teal-400  duration-300 cursor-pointer"
             />
           </div>
         </ul>
@@ -109,7 +112,7 @@ const Footer = () => {
 
       <div
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10
-         text-center pt-2 text-gray-400 text-sm pb-8"
+         text-center pt-2 text-gray-400 text-sm pb-8 bg-[#1f3f40]"
       >
         <span>© 2020 Becodemy. All rights reserved.</span>
         <span>Terms · Privacy Policy</span>

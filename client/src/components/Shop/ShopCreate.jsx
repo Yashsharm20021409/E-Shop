@@ -37,13 +37,13 @@ const ShopCreate = () => {
         // toast the response which we get from backend after submitting the data
         toast.success(res.data.message);
         // make all field empty
-        // setName("");
-        // setEmail("");
-        // setPassword("");
-        // setAvatar();
-        // setZipCode();
-        // setAddress("");
-        // setPhoneNumber();
+        setName("");
+        setEmail("");
+        setPassword("");
+        setAvatar();
+        setZipCode();
+        setAddress("");
+        setPhoneNumber();
       })
       .catch((error) => {
         toast.error(error.response.data.message);

@@ -60,7 +60,7 @@ const Header = ({ activeHeading }) => {
                 src="https://shopo.quomodothemes.website/assets/images/logo.svg"
                 alt=""
               /> */}
-              <h3 style={{ "fontWeight": "700", "fontSize": '30px' }}>E-Shop.</h3>
+              <h3 style={{ "fontWeight": "700", "fontSize": '30px' ,"color":'#1e5556'}}>E-Shop.</h3>
             </Link>
           </div>
           {/* search box */}
@@ -70,7 +70,7 @@ const Header = ({ activeHeading }) => {
               placeholder="Search Product..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
+              className="h-[40px] w-full px-2 border-[#0e4345] border-[2px] rounded-md"
             />
             <AiOutlineSearch
               size={30}
@@ -100,9 +100,9 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
 
-          <div className={`${styles.button}`}>
+          <div className={`${styles.button}`} style={{backgroundColor:"#1e5556"}}>
             <Link to="/shop-create">
-              <h1 className="text-[#fff] flex items-center">
+              <h1 className="text-[#fff] flex items-center" >
                 Become Seller <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
@@ -112,7 +112,8 @@ const Header = ({ activeHeading }) => {
 
       <div
         // to add scroll hanging behaviour of navbar
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10 " : null} transition  800px:flex items-center justify-between w-full bg-[#3321c8] h-[70px]`}>
+        // footer other color 0e4345
+        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10 " : null} transition  800px:flex items-center justify-between w-full  bg-[#1e393a]  h-[70px]`}>
         <div className={`${styles.section} relative ${styles.normalFlex} justify-between`}>
           {/* categories */}
           <div onClick={() => setDropDown(!dropDown)}>

@@ -12,7 +12,7 @@ const Navbar = ({active}) => {
             navItems && navItems.map((i,index) => (
                 <div className="flex" key={index}>
                   {/* url also exists in dummy data */}
-                    <Link to={i.url} className={`${active === index + 1 ? "text-[#17dd1f]" : "text-white 800px:text-[#fff]"} pb-[4px] 800px:pb-0 font-[500] px-6 cursor-pointer}`}>
+                    <Link to={i.url} className={`${active === index + 1 ? "text-teal-400" : "text-white 800px:text-[#fff]"} pb-[4px] 800px:pb-0 font-[500] px-6 cursor-pointer}`}>
                     {i.title}
                     </Link>
                 </div>
