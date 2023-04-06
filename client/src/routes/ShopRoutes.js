@@ -1,8 +1,9 @@
-// import ShopHomePage from "../pages/Shop/ShopHomePage";
+import ShopHomePage from "../pages/Shop/ShopHomePage";
 import ShopDashboardPage from "../pages/Shop/ShopDashboardPage"
 
 
 export {
     // ShopHomePage,
     ShopDashboardPage,
+    ShopHomePage,
 };

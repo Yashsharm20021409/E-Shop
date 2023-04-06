@@ -11,7 +11,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage } from "./routes/ShopRoutes.js"
+import { ShopDashboardPage ,ShopHomePage} from "./routes/ShopRoutes.js"
 
 function App() {
 
@@ -57,14 +57,14 @@ function App() {
         {/* Shop Routes */}
         <Route path="/shop-create" element={<ShopCreatePage />}></Route>
         <Route path="/shop-login" element={<ShopLoginPage />}></Route>
-        {/* <Route
+        <Route
           path="/shop/:id"
           element={
             <SellerProtectedRoute >
               <ShopHomePage />
             </SellerProtectedRoute>
           }
-        /> */}
+        />
         <Route
           path="/dashboard"
           element={
