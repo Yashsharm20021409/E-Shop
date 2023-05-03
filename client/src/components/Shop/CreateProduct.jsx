@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { createProduct } from "../../redux/actions/product";
+import { createProduct } from "../../redux/actions/product";
 import { categoriesData } from "../../static/data";
 import { toast } from "react-toastify";
 
 const CreateProduct = () => {
   const { seller } = useSelector((state) => state.seller);
+  const { success, error } = useSelector((state) => state.products);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,17 +22,42 @@ const CreateProduct = () => {
   const [discountPrice, setDiscountPrice] = useState();
   const [stock, setStock] = useState();
 
-  
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (success) {
+      toast.success("Product created successfully!");
+      navigate("/dashboard");
+      window.location.reload();
+    }
+  }, [dispatch, error, success]);
 
   const handleImageChange = (e) => {
     e.preventDefault();
-    
+
     let files = Array.from(e.target.files);
-    setImages((prevImages) => [...prevImages, ...files])
+    setImages((prevImages) => [...prevImages, ...files]);
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
+    const newForm = new FormData();
+
+    images.forEach((image) => {
+      newForm.append("images", image);
+    });
+
+    newForm.append("name", name);
+    newForm.append("description", description);
+    newForm.append("category", category);
+    newForm.append("tags", tags);
+    newForm.append("originalPrice", originalPrice);
+    newForm.append("discountPrice", discountPrice);
+    newForm.append("stock", stock);
+    newForm.append("shopId", seller._id);
+    dispatch(createProduct(newForm));
   };
 
   return (
@@ -81,19 +107,19 @@ const CreateProduct = () => {
             onChange={(e) => setCategory(e.target.value)}
           >
             {/* this is by default option */}
-            <option value="Choose a category">Choose a category</option> 
+            <option value="Choose a category">Choose a category</option>
             {/* matalb ese line se daldo option ya dyanmically daldo as seen below */}
 
             {/*IMPOTANT (value = To show in select input bar on frontend) */}
             {/* <option value="good">abc</option>  */}
 
             {/* dynamic */}
-            {
-                categoriesData && categoriesData.map((i)=>(
-                    <option value={i.title} key={i.id} >{i.title}</option>
-                ))
-            }
-            
+            {categoriesData &&
+              categoriesData.map((i) => (
+                <option value={i.title} key={i.id}>
+                  {i.title}
+                </option>
+              ))}
           </select>
         </div>
         <br />
