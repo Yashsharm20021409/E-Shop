@@ -11,7 +11,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage ,ShopCreateProduct,ShopAllProducts} from "./routes/ShopRoutes.js"
+import { ShopDashboardPage ,ShopCreateProduct,ShopAllProducts,ShopCreateEvents} from "./routes/ShopRoutes.js"
 import {ShopHomePage} from "./shopRoutes"
 
 function App() {
@@ -87,6 +87,14 @@ function App() {
           element={
             <SellerProtectedRoute >
               <ShopAllProducts />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-create-event"
+          element={
+            <SellerProtectedRoute>
+              <ShopCreateEvents />
             </SellerProtectedRoute>
           }
         />

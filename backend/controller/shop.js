@@ -8,8 +8,8 @@ const fs = require("fs")
 const jwt = require("jsonwebtoken")
 const sendMail = require("../utilis/sendMail")
 const sendToken = require("../utilis/jwtToken")
-const sendShopToken  = require("../utilis/shopToken");
-const {isSeller} = require('../middleware/auth');
+const sendShopToken = require("../utilis/shopToken");
+const { isSeller } = require('../middleware/auth');
 const Shop = require("../model/shop");
 
 
@@ -98,13 +98,13 @@ router.post(
             }
 
             seller = await Shop.create({
-                name:name,
-                email:email,
-                avatar:avatar,
-                password:password,
-                zipCode:zipCode,
-                address:address,
-                phoneNumber:phoneNumber,
+                name: name,
+                email: email,
+                avatar: avatar,
+                password: password,
+                zipCode: zipCode,
+                address: address,
+                phoneNumber: phoneNumber,
             });
 
             sendShopToken(seller, 201, res);
@@ -155,22 +155,38 @@ router.get(
     "/getSeller",
     isSeller,
     catchAsyncErrors(async (req, res, next) => {
-      try {
-        const seller = await Shop.findById(req.seller._id);
-  
-        if (!seller) {
-          return next(new ErrorHandler("User doesn't exists", 400));
-        }
-  
-        res.status(200).json({
-          success: true,
-          seller,
-        });
-      } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-      }
-    })
-  );
+        try {
+            const seller = await Shop.findById(req.seller._id);
 
+            if (!seller) {
+                return next(new ErrorHandler("User doesn't exists", 400));
+            }
+
+            res.status(200).json({
+                success: true,
+                seller,
+            });
+        } catch (error) {
+            return next(new ErrorHandler(error.message, 500));
+        }
+    })
+);
+
+// logout the seller
+router.get("/logout", catchAsyncErrors((req, res, next) => {
+    try {
+        // when we click on the logout button our cookies get null and we use window reload method in frontend(in logout section) due to user get logout
+        res.cookie("seller_token", null, {
+            expires: new Date(Date.now()),
+            httpOnly: true,
+        })
+        res.status(201).json({
+            success: true,
+            message: "Log out successful!",
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+}))
 
 module.exports = router;

@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 // import Loader from "../Layout/Loader";
 
 const ShopInfo = ({ isOwner }) => {
-  const {seller} = useSelector((state)=>state.seller)
+  const { seller } = useSelector((state) => state.seller);
   // const [data,setData] = useState({});
   // const [isLoading,setIsLoading] = useState(false);
 
@@ -26,10 +26,10 @@ const ShopInfo = ({ isOwner }) => {
   // }, [])
 
   const logoutHandler = async () => {
-    // axios.get(`${server}/shop/logout`,{
-    //   withCredentials: true,
-    // });
-    // window.location.reload();
+    axios.get(`${server}/shop/logout`, {
+      withCredentials: true,
+    });
+    window.location.reload();
   };
 
   return (
@@ -72,7 +72,10 @@ const ShopInfo = ({ isOwner }) => {
           <div className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}>
             <span className="text-white">Edit Shop</span>
           </div>
-          <div className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`} onClick={logoutHandler} >
+          <div
+            className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}
+            onClick={logoutHandler}
+          >
             <span className="text-white">Log Out</span>
           </div>
         </div>
