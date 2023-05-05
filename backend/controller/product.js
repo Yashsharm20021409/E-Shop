@@ -6,6 +6,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utilis/ErrorHandler");
 const Shop = require("../model/shop");
 const { isSeller } = require("../middleware/auth");
+const  fs = require("fs");
 
 
 // create Product
@@ -62,19 +63,19 @@ router.delete(
         try {
             const productId = req.params.id;
 
-            // const productData = await Product.findById(productId);
+            const productData = await Product.findById(productId);
 
-            // // to delete from local storage
-            // productData.images.forEach((imageUrl) => {
-            //     const filename = imageUrl;
-            //     const filePath = `uploads/${filename}`;
+            // to delete from local storage
+            productData.images.forEach((imageUrl) => {
+                const filename = imageUrl;
+                const filePath = `uploads/${filename}`;
 
-            //     fs.unlink(filePath, (err) => {
-            //         if (err) {
-            //             console.log(err);
-            //         }
-            //     });
-            // });
+                fs.unlink(filePath, (err) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
+            });
 
             // to delete from database
             const product = await Product.findByIdAndDelete(productId);
