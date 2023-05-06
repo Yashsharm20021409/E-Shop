@@ -11,7 +11,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents,ShopAllCoupouns } from "./routes/ShopRoutes.js"
+import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents,ShopAllCoupouns,ShopPreviewPage, } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 
 function App() {
@@ -56,6 +56,7 @@ function App() {
           </ProtectedRoute>} />
 
         {/* Shop Routes */}
+        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         <Route path="/shop-create" element={<ShopCreatePage />}></Route>
         <Route path="/shop-login" element={<ShopLoginPage />}></Route>
         <Route

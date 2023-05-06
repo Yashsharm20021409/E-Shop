@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { productData } from "../../../static/data";
+// import { productData } from "../../../static/data";
 import styles from "../../../styles/style";
 import ProductCard from "../ProductCard/ProductCard";
+import { useSelector } from "react-redux";
 
 const BestDeals = () => {
     // fetching data
   const [data, setData] = useState([]);
+  const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
-    // sort data by max number of time product get sold
-    const d = productData && productData.sort((a, b) => b.total_sell - a.total_sell);
-
-    // store only five
-    const firstFive = d.slice(0, 5);
+    const productsData = products ? [...products] : [];
+    const sortedData = productsData?.sort((a,b) => b.sold_out - a.sold_out); 
+    const firstFive = sortedData && sortedData.slice(0, 5);
     setData(firstFive);
-  }, []);
+  }, [products]);
 
   return (
     <div>

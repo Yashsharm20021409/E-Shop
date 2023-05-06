@@ -1,18 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "../../styles/style";
+import { backend_url, server } from "../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProductsShop } from "../../redux/actions/product";
 
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  
+  const { products } = useSelector((state) => state.products);
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(getAllProductsShop(data._id));
+  }, [dispatch]);
+  
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -36,7 +49,7 @@ const ProductDetails = ({ data }) => {
             <div className="flex w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img
-                  src={data.image_Url[select].url}
+                  // src={`${backend_url}${data && data.images[select]}`}
                   alt=""
                   className="w-[80%]"
                 />
@@ -47,7 +60,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[0].url}
+                      src={`${backend_url}${data.images && data.images[0]}`}
                       alt=""
                       className="h-[200px]"
                       onClick={() => setSelect(0)}
@@ -59,7 +72,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[1].url}
+                      src={`${backend_url}${data.images && data.images[0]}`}
                       alt=""
                       className="h-[200px]"
                       onClick={() => setSelect(1)}
@@ -72,10 +85,10 @@ const ProductDetails = ({ data }) => {
                 <p>{data.description}</p>
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
+                    {data.discountPrice}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.originalPrice ? data.originalPrice + "$" : null}
                   </h3>
                 </div>
 
@@ -126,7 +139,7 @@ const ProductDetails = ({ data }) => {
                 </div>
                 <div className="flex items-center pt-8">
                   <img
-                    src={data.shop.shop_avatar.url}
+                    src={`${backend_url}${data?.shop?.avatar}`}
                     alt=""
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />
@@ -134,9 +147,7 @@ const ProductDetails = ({ data }) => {
                     <h3 className={`${styles.shop_name} pb-1 pt-1`}>
                       {data.shop.name}
                     </h3>
-                    <h5 className="pb-3 text-[15px]">
-                      ({data.shop.ratings}) Ratings
-                    </h5>
+                    <h5 className="pb-3 text-[15px]">(4/5) Ratings</h5>
                   </div>
                   <div
                     className={`${styles.button} bg-[#6443d1] mt-4 !rounded !h-11`}
@@ -150,7 +161,7 @@ const ProductDetails = ({ data }) => {
               </div>
             </div>
           </div>
-          <ProductDetailsInfo data={data} />
+          <ProductDetailsInfo data={data} products={products} />
           <br />
           <br />
         </div>
@@ -159,8 +170,9 @@ const ProductDetails = ({ data }) => {
   );
 };
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data , products}) => {
   const [active, setActive] = useState(1);
+  
 
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
@@ -208,35 +220,7 @@ const ProductDetailsInfo = ({ data }) => {
       {active === 1 ? (
         <>
           <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line">
-            Product details are a crucial part of any eCommerce website or
-            online marketplace. These details help the potential customers to
-            make an informed decision about the product they are interested in
-            buying. A well-written product description can also be a powerful
-            marketing tool that can help to increase sales. Product details
-            typically include information about the product's features,
-            specifications, dimensions, weight, materials, and other relevant
-            information that can help language, and be honest and transparent
-            about the product's features and limitations.
-          </p>
-          <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line">
-            customers to understand the product better. The product details
-            section should also include high-quality images and videos of the
-            product, as well as customer reviews and ratings. When writing
-            product details, it is essential to keep the target audience in
-            mind. The language used should be clear and easy to understand, and
-            technical terms should be explained in simple language. The tone of
-            the product details should be persuasive, highlighting the unique
-            features of the
-          </p>
-          <p className="py-2 text-[18px] leading-8 pb-10 whitespace-pre-line">
-            customers to understand the product better. The product details
-            section should also include high-quality images and videos of the
-            product, as well as customer reviews and ratings. When writing
-            product details, it is essential to keep the target audience in
-            mind. The language used should be clear and easy to understand, and
-            technical terms should be explained in simple language. The tone of
-            the product details should be persuasive, highlighting the unique
-            features of the
+            {data.description}
           </p>
         </>
       ) : null}
@@ -252,43 +236,44 @@ const ProductDetailsInfo = ({ data }) => {
           <div className="w-full 800px:w-[50%]">
             <div className="flex items-center">
               <img
-                src={data.shop.shop_avatar.url}
+                src={`${backend_url}${data?.shop?.avatar}`}
                 className="w-[50px] h-[50px] rounded-full"
                 alt=""
               />
               <div className="pl-3">
                 <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                <h5 className="pb-2 text-[15px]">
-                  ({data.shop.ratings}) Ratings
-                </h5>
+                <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
               </div>
             </div>
-            <p className="pt-2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem
-              cum quibusdam omnis a minima perspiciatis itaque magnam nesciunt,
-              porro saepe aspernatur repudiandae iusto sapiente, esse accusamus
-              eligendi! Vel, officia similique?
-            </p>
+            <p className="pt-2">{data.shop.description}</p>
           </div>
           <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end">
-               <div className="text-left">
-                 <h5 className="font-[600]">
-                    Joined on: <span className="font-[500]">14 March,2023</span>
-                 </h5>
-                 <h5 className="font-[600] pt-3">
-                    Total Products: <span className="font-[500]">1,223</span>
-                 </h5>
-                 <h5 className="font-[600] pt-3">
-                    Total Reviews: <span className="font-[500]">324</span>
-                 </h5>
-                 <Link to="/">
-                  <div
-                    className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
-                  >
-                    <h4 className="text-white">Visit Shop</h4>
-                  </div>
-                </Link>
-               </div>
+            <div className="text-left">
+              <h5 className="font-[600]">
+                Joined on:{" "}
+                <span className="font-[500]">
+                  {data.shop?.createdAt?.slice(0, 10)}
+                </span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Products:{" "}
+                <span className="font-[500]">
+                  { products && products.length}
+                  
+                   {/* 23 */}
+                </span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Reviews: <span className="font-[500]">200</span>
+              </h5>
+              <Link to="/">
+                <div
+                  className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
+                >
+                  <h4 className="text-white">Visit Shop</h4>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       )}
