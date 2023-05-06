@@ -13,6 +13,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
 import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents,ShopAllCoupouns,ShopPreviewPage, } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
+import { getAllProducts } from './redux/actions/product';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
   useEffect(() => {
     Store.dispatch(loaduser());
     Store.dispatch(loadSeller());
+    Store.dispatch(getAllProducts());
   }, []);
 
   return (

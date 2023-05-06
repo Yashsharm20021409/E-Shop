@@ -20,11 +20,12 @@ const ProductDetails = ({ data }) => {
   const dispatch = useDispatch();
   
   const { products } = useSelector((state) => state.products);
-  const { id } = useParams();
+  // const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getAllProductsShop(data._id));
-  }, [dispatch]);
+    dispatch(getAllProductsShop(data && data.shop._id));
+    // data dependency is important to give here
+  }, [dispatch,data]);
   
 
   const incrementCount = () => {
@@ -49,35 +50,22 @@ const ProductDetails = ({ data }) => {
             <div className="flex w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img
-                  // src={`${backend_url}${data && data.images[select]}`}
+                  src={`${backend_url}${data && data.images[select]}`}
                   alt=""
                   className="w-[80%]"
                 />
                 <div className="w-full flex">
-                  <div
-                    className={`${
-                      select === 0 ? "border" : "null"
-                    } cursor-pointer`}
-                  >
-                    <img
-                      src={`${backend_url}${data.images && data.images[0]}`}
-                      alt=""
-                      className="h-[200px]"
-                      onClick={() => setSelect(0)}
-                    />
-                  </div>
-                  <div
-                    className={`${
-                      select === 1 ? "border" : "null"
-                    } cursor-pointer`}
-                  >
-                    <img
-                      src={`${backend_url}${data.images && data.images[0]}`}
-                      alt=""
-                      className="h-[200px]"
-                      onClick={() => setSelect(1)}
-                    />
-                  </div>
+                  
+                {data && data.images.map((i, index) => (
+                      <div className={`${select === 0 ? "border" : "null" } cursor-pointer`}>
+                        <img
+                          src={`${backend_url}${i}`}
+                          alt=""
+                          className="h-[200px] overflow-hidden mr-3 mt-3"
+                          onClick={() => setSelect(index)}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className="w-full 800px:w-[50%] pt-5">

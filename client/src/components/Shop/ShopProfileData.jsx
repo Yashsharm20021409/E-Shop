@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { getAllProductsShop } from "../../redux/actions/product";
+import { getAllProducts, getAllProductsShop } from "../../redux/actions/product";
 import { getAllEventsShop } from "../../redux/actions/event";
 import styles from "../../styles/style";
 import { productData } from "../../static/data";
@@ -17,6 +17,7 @@ const ShopProfileData = ({ isOwner }) => {
   useEffect(() => {
     dispatch(getAllProductsShop(id));
     dispatch(getAllEventsShop(id));
+    // dispatch(getAllProducts());
   }, [dispatch]);
 
   const [active, setActive] = useState(1);

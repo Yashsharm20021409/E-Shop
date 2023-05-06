@@ -13,7 +13,9 @@ const SuggestedProduct = ({ data }) => {
     const d =
     products && products.filter((i) => i.category === data.category);
     setProductData(d);
-  }, []);
+
+    // dependency data,products dena imp h to fetch data again and agin on refreshing
+  }, [data,products]);
 
   return (
     <div>

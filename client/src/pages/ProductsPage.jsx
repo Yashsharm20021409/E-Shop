@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import Footer from "../components/Layout/Footer";
 import Header from "../components/Layout/Header";
 import ProductCard from "../components/Route/ProductCard/ProductCard";
-import { productData } from "../static/data";
 import styles from "../styles/style";
 import Loader from "../components/Layout/Loader";
 import { useSelector } from "react-redux";
@@ -12,20 +11,20 @@ const ProductsPage = () => {
   const [searchParams] = useSearchParams();
   const categoryData = searchParams.get("category");
   const [data, setData] = useState([]);
-  const { products, isLoading } = useSelector((state) => state.products);
+  const { allProducts, isLoading } = useSelector((state) => state.products);
   
 
   useEffect(() => {
     if (categoryData === null) {
-      const d =
-        products && products.sort((a, b) => a.total_sell - b.total_sell);
+      const d = allProducts;
       setData(d);
     } else {
-      const d = products && products.filter((i) => i.category === categoryData);
+      const d =
+      allProducts && allProducts.filter((i) => i.category === categoryData);
       setData(d);
     }
-       window.scrollTo(0,0);
-  }, [products]);
+    //    window.scrollTo(0,0);
+  }, [allProducts]);
 
   return (
     <>

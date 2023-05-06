@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { productData } from "../../../static/data";
 import styles from "../../../styles/style";
 import ProductCard from "../ProductCard/ProductCard";
 import { useSelector } from "react-redux";
@@ -9,9 +8,7 @@ import  Store  from "../../../redux/store";
 const FeaturedProduct = () => {
   const {allProducts} = useSelector((state) => state.products);
   // console.log(products)
-  useEffect(() => {
-    Store.dispatch(getAllProducts());
-  }, []);
+
 
   return (
     <div> 
