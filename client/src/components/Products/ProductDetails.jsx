@@ -18,15 +18,14 @@ const ProductDetails = ({ data }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  
+
   const { products } = useSelector((state) => state.products);
   // const { id } = useParams();
 
   useEffect(() => {
     dispatch(getAllProductsShop(data && data.shop._id));
     // data dependency is important to give here
-  }, [dispatch,data]);
-  
+  }, [dispatch, data]);
 
   const incrementCount = () => {
     setCount(count + 1);
@@ -55,9 +54,13 @@ const ProductDetails = ({ data }) => {
                   className="w-[80%]"
                 />
                 <div className="w-full flex">
-                  
-                {data && data.images.map((i, index) => (
-                      <div className={`${select === 0 ? "border" : "null" } cursor-pointer`}>
+                  {data &&
+                    data.images.map((i, index) => (
+                      <div
+                        className={`${
+                          select === 0 ? "border" : "null"
+                        } cursor-pointer`}
+                      >
                         <img
                           src={`${backend_url}${i}`}
                           alt=""
@@ -158,9 +161,8 @@ const ProductDetails = ({ data }) => {
   );
 };
 
-const ProductDetailsInfo = ({ data , products}) => {
+const ProductDetailsInfo = ({ data, products }) => {
   const [active, setActive] = useState(1);
-  
 
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
@@ -220,22 +222,24 @@ const ProductDetailsInfo = ({ data , products}) => {
       ) : null}
 
       {active === 3 && (
-        <div className="w-full block 800px:flex p-5">
-          <div className="w-full 800px:w-[50%]">
-            <div className="flex items-center">
-              <img
-                src={`${backend_url}${data?.shop?.avatar}`}
-                className="w-[50px] h-[50px] rounded-full"
-                alt=""
-              />
-              <div className="pl-3">
-                <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
-                <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
+        <div className="w-full  flex p-5 max-md:flex-col">
+          <div className="w-full max-md:w-[50%]">
+            <Link to={`/shop/preview/${data.shop._id}`}>
+              <div className="flex items-center">
+                <img
+                  src={`${backend_url}${data?.shop?.avatar}`}
+                  className="w-[50px] h-[50px] rounded-full"
+                  alt=""
+                />
+                <div className="pl-3">
+                  <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                  <h5 className="pb-2 text-[15px]">(4/5) Ratings</h5>
+                </div>
               </div>
-            </div>
+            </Link>
             <p className="pt-2">{data.shop.description}</p>
           </div>
-          <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end">
+          <div className="w-full max-md:w-[50%] mt-5 max-md:mt-0 flex flex-col items-end">
             <div className="text-left">
               <h5 className="font-[600]">
                 Joined on:{" "}
@@ -246,9 +250,9 @@ const ProductDetailsInfo = ({ data , products}) => {
               <h5 className="font-[600] pt-3">
                 Total Products:{" "}
                 <span className="font-[500]">
-                  { products && products.length}
-                  
-                   {/* 23 */}
+                  {products && products.length}
+
+                  {/* 23 */}
                 </span>
               </h5>
               <h5 className="font-[600] pt-3">

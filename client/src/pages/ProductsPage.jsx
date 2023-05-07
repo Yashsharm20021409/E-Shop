@@ -24,6 +24,7 @@ const ProductsPage = () => {
       setData(d);
     }
     //    window.scrollTo(0,0);
+    // allProducts dependency is important to give here otherwise on reload you will show nothing in products section
   }, [allProducts]);
 
   return (

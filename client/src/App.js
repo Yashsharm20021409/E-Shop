@@ -14,6 +14,7 @@ import SellerProtectedRoute from "./routes/SellerProtectedRoute"
 import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents,ShopAllCoupouns,ShopPreviewPage, } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 import { getAllProducts } from './redux/actions/product';
+import { getAllEvents } from './redux/actions/event';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
     Store.dispatch(loaduser());
     Store.dispatch(loadSeller());
     Store.dispatch(getAllProducts());
+    Store.dispatch(getAllEvents());
   }, []);
 
   return (
