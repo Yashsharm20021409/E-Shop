@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
-import { categoriesData} from "../../static/data";
+import { categoriesData } from "../../static/data";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -25,6 +24,7 @@ const Header = ({ activeHeading }) => {
   const { allProducts } = useSelector((state) => state.products);
   const { isSeller } = useSelector((state) => state.seller);
   const { cart } = useSelector((state) => state.cart);
+  const { wishlist } = useSelector((state) => state.wishlist);
   // states
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -38,9 +38,11 @@ const Header = ({ activeHeading }) => {
     const term = e.target.value;
     setSearchTerm(term);
 
-    const filteredProducts =  allProducts && allProducts.filter((product) =>
-      product.name.toLowerCase().includes(term.toLowerCase())
-    );
+    const filteredProducts =
+      allProducts &&
+      allProducts.filter((product) =>
+        product.name.toLowerCase().includes(term.toLowerCase())
+      );
     setSearchData(filteredProducts);
   };
 
@@ -63,7 +65,15 @@ const Header = ({ activeHeading }) => {
                 src="https://shopo.quomodothemes.website/assets/images/logo.svg"
                 alt=""
               /> */}
-              <h3 style={{ "fontWeight": "700", "fontSize": '30px' ,"color":'#1e5556'}}>E-Shop.</h3>
+              <h3
+                style={{
+                  fontWeight: "700",
+                  fontSize: "30px",
+                  color: "#1e5556",
+                }}
+              >
+                E-Shop.
+              </h3>
             </Link>
           </div>
           {/* search box */}
@@ -103,9 +113,12 @@ const Header = ({ activeHeading }) => {
             ) : null}
           </div>
 
-          <div className={`${styles.button}`} style={{backgroundColor:"#1e5556"}}>
+          <div
+            className={`${styles.button}`}
+            style={{ backgroundColor: "#1e5556" }}
+          >
             <Link to="/shop-create">
-              <h1 className="text-[#fff] flex items-center" >
+              <h1 className="text-[#fff] flex items-center">
                 {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
                 <IoIosArrowForward className="ml-1" />
               </h1>
@@ -117,8 +130,13 @@ const Header = ({ activeHeading }) => {
       <div
         // to add scroll hanging behaviour of navbar
         // footer other color 0e4345
-        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10 " : null} transition  800px:flex items-center justify-between w-full  bg-[#1e393a]  h-[70px]`}>
-        <div className={`${styles.section} relative ${styles.normalFlex} justify-between`}>
+        className={`${
+          active === true ? "shadow-sm fixed top-0 left-0 z-10 " : null
+        } transition  800px:flex items-center justify-between w-full  bg-[#1e393a]  h-[70px]`}
+      >
+        <div
+          className={`${styles.section} relative ${styles.normalFlex} justify-between`}
+        >
           {/* categories */}
           <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px]  1000px:block">
@@ -150,10 +168,13 @@ const Header = ({ activeHeading }) => {
           {/* wishList / Login / Cart */}
           <div className="flex">
             <div className={`${styles.normalFlex}`}>
-              <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenWishlist(true)} >
+              <div
+                className="relative cursor-pointer mr-[15px]"
+                onClick={() => setOpenWishlist(true)}
+              >
                 <AiOutlineHeart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                  0
+                  { wishlist && wishlist.length }
                 </span>
               </div>
             </div>
@@ -175,7 +196,6 @@ const Header = ({ activeHeading }) => {
 
             <div className={`${styles.normalFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-
                 {isAuthenticated ? (
                   <Link to="/profile">
                     <img
@@ -189,14 +209,12 @@ const Header = ({ activeHeading }) => {
                     <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
                   </Link>
                 )}
-
               </div>
             </div>
 
             {/* cart popup */}
             <div className="overflow-auto">
-
-            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
+              {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
             </div>
 
             {/* wishlist popup */}
@@ -204,12 +222,6 @@ const Header = ({ activeHeading }) => {
               <Wishlist setOpenWishlist={setOpenWishlist} />
             ) : null}
           </div>
-
-          
-
-          
-          
-
         </div>
       </div>
     </>
