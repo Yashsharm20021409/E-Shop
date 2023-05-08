@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/style";
-import { categoriesData, productData } from "../../static/data";
+import { categoriesData} from "../../static/data";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -23,6 +23,8 @@ const Header = ({ activeHeading }) => {
   // fetch the Logged in user
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { allProducts } = useSelector((state) => state.products);
+  const { isSeller } = useSelector((state) => state.seller);
+  const { cart } = useSelector((state) => state.cart);
   // states
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
@@ -104,7 +106,8 @@ const Header = ({ activeHeading }) => {
           <div className={`${styles.button}`} style={{backgroundColor:"#1e5556"}}>
             <Link to="/shop-create">
               <h1 className="text-[#fff] flex items-center" >
-                Become Seller <IoIosArrowForward className="ml-1" />
+                {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
+                <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
           </div>
@@ -165,7 +168,7 @@ const Header = ({ activeHeading }) => {
                   color="rgb(255 255 255 / 83%)"
                 />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                  1
+                  {cart && cart.length}
                 </span>
               </div>
             </div>

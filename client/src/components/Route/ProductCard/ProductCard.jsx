@@ -1,18 +1,39 @@
 import React, { useState } from "react";
-import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from "react-icons/ai";
+import { AiFillHeart,  AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styles from "../../../styles/style";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 import { backend_url } from "../../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addTocart } from "../../../redux/actions/cart";
 
 const ProductCard = ({ data,isEvent }) => {
+
+  const { cart } = useSelector((state) => state.cart);
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const d = data.name;
   const product_name = d.replace(/\s+/g, "-");
 
   const Handle = () =>{}
+
+  const addToCartHandler = (id) => {
+    const isItemExists = cart && cart.find((i) => i._id === id);
+    if (isItemExists) {
+      toast.error("Item already in cart!");
+    } else {
+      if (data.stock < 1) {
+        toast.error("Product stock limited!");
+      } else {
+        const cartData = { ...data, qty: 1 };
+        dispatch(addTocart(cartData));
+        toast.success("Item added to cart successfully!");
+      }
+    }
+  };
 
   return (
     <>
@@ -87,7 +108,7 @@ const ProductCard = ({ data,isEvent }) => {
               <AiOutlineShoppingCart
                size={25}
                className="cursor-pointer absolute right-2 top-24"
-               onClick={() => Handle()}
+               onClick={() => addToCartHandler(data._id)}
                color="#444"
                title="Add to cart"
                />
