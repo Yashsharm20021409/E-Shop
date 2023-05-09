@@ -43,7 +43,7 @@ function App() {
         <Route path="/products" element={<ProductsPage />} />
         <Route exact path='/activation/:activation_token' element={<ActivationPage />} > </Route>
         <Route exact path='/seller/activation/:activation_token' element={<SellerActivationPage />} > </Route>
-        <Route path="/product/:name" element={<ProductDetailsPage />} />
+        <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/best-selling" element={<BestSellingPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/faq" element={<FAQPage />} />

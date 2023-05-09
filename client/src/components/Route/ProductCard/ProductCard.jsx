@@ -24,10 +24,6 @@ const ProductCard = ({ data, isEvent }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
-  // const d = data.name;
-  // const product_name = d.replace(/\s+/g, "-");
-
-  // const Handle = () => {};
 
   useEffect(() => {
     // if exists already then set click true
@@ -73,7 +69,7 @@ const ProductCard = ({ data, isEvent }) => {
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
-              : `/product/${data.name}`
+              : `/product/${data._id}`
           }`}
         >
           <img
@@ -91,7 +87,7 @@ const ProductCard = ({ data, isEvent }) => {
           to={`${
             isEvent === true
               ? `/product/${data._id}?isEvent=true`
-              : `/product/${data.name}`
+              : `/product/${data._id}`
           }`}
         >
           <h4 className="pb-3 font-[500]">
