@@ -84,7 +84,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
               onClick={() => setOpen(false)}
             />
 
-            <div className="w-full flex">
+            <div className="w-full flex max-sm:flex-col">
               <div className="w-full 800px:w-[50%]">
                 <img
                   src={`${backend_url}${data.images && data.images[0]}`}

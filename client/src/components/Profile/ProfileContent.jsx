@@ -1,29 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineArrowRight,
   AiOutlineCamera,
   AiOutlineDelete,
 } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { backend_url } from "../../server";
+import { useDispatch, useSelector } from "react-redux";
+import { backend_url, server } from "../../server";
 import styles from "../../styles/style";
 import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { MdOutlineTrackChanges } from "react-icons/md"; 
+import { MdOutlineTrackChanges } from "react-icons/md";
+import {
+  deleteUserAddress,
+  loadUser,
+  loaduser,
+  updatUserAddress,
+  updateUserInformation,
+} from "../../redux/actions/user";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const ProfileContent = ({ active }) => {
-  const { user } = useSelector((state) => state.user);
+  const { user, error, successMessage } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user.name);
   const [email, setEmail] = useState(user && user.email);
-  const [phoneNumber, setPhoneNumber] = useState();
-  const [zipCode, setZipCode] = useState();
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(user && user.phoneNumber);
+  const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: "clearErrors" });
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch({ type: "clearMessages" });
+    }
+  }, [error, successMessage]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateUserInformation(name, email, phoneNumber, password));
   };
+
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    setAvatar(file);
+
+    const formData = new FormData();
+
+    formData.append("image", e.target.files[0]);
+
+    await axios
+      .put(`${server}/user/update-avatar`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        // here we use shortruct insted of creating diff redux method we agian loaduser just after updation to show new details about the user
+         dispatch(loaduser());
+         toast.success("avatar updated successfully!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
+  };
+
 
   return (
     <div className="w-full">
@@ -33,13 +80,21 @@ const ProfileContent = ({ active }) => {
           <div className="flex justify-center w-full">
             <div className="relative">
               <img
-            //   if user avatar is exists
+                //   if user avatar is exists in db then fetch it to show on client side
                 src={`${backend_url}${user?.avatar}`}
                 className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
                 alt=""
               />
               <div className="w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]">
-                <AiOutlineCamera />
+                <input
+                  type="file"
+                  id="image"
+                  className="hidden"
+                  onChange={handleImage}
+                />
+                <label htmlFor="image">
+                  <AiOutlineCamera />
+                </label>
               </div>
             </div>
           </div>
@@ -47,8 +102,8 @@ const ProfileContent = ({ active }) => {
           <br />
           <div className="w-full px-5">
             <form onSubmit={handleSubmit} aria-required={true}>
-              <div className="w-full 800px:flex block pb-3">
-                <div className=" w-[100%] 800px:w-[50%]">
+              <div className="w-full flex max-md:block pb-3">
+                <div className=" max-sm:w-[100%] w-[50%]">
                   <label className="block pb-2">Full Name</label>
                   <input
                     type="text"
@@ -58,7 +113,7 @@ const ProfileContent = ({ active }) => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <div className=" w-[100%] 800px:w-[50%]">
+                <div className=" max-sm:w-[100%] w-[50%]">
                   <label className="block pb-2">Email Address</label>
                   <input
                     type="text"
@@ -70,48 +125,26 @@ const ProfileContent = ({ active }) => {
                 </div>
               </div>
 
-              <div className="w-full 800px:flex block pb-3">
-                <div className=" w-[100%] 800px:w-[50%]">
+              <div className="w-full flex max-md:block pb-3">
+                <div className=" max-sm:w-[100%] w-[50%]">
                   <label className="block pb-2">Phone Number</label>
                   <input
                     type="number"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                    className={`${styles.input} !w-[95%] mb-4 max-sm:mb-0`}
                     required
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Zip Code</label>
-                  <input
-                    type="number"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={zipCode}
-                    onChange={(e) => setZipCode(e.target.value)}
-                  />
-                </div>
-              </div>
 
-              <div className="w-full 800px:flex block pb-3">
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Address 1</label>
+                <div className=" max-sm:w-[100%] w-[50%]">
+                  <label className="block pb-2">Enter your password</label>
                   <input
-                    type="address"
-                    className={`${styles.input} !w-[95%]`}
+                    type="password"
+                    className={`${styles.input} !w-[95%] mb-4 max-sm:mb-0`}
                     required
-                    value={address1}
-                    onChange={(e) => setAddress1(e.target.value)}
-                  />
-                </div>
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Address 2</label>
-                  <input
-                    type="address"
-                    className={`${styles.input} !w-[95%]`}
-                    required
-                    value={address2}
-                    onChange={(e) => setAddress2(e.target.value)}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -478,17 +511,17 @@ const Address = () => {
         </div>
       </div>
       <br />
-      <div className="w-full bg-white h-min 800px:h-[70px] rounded-[4px] flex items-center px-3 shadow justify-between pr-10">
+      <div className="w-full bg-white max-sm:h-min h-[70px] rounded-[4px] flex items-center px-3 shadow justify-between pr-10">
         <div className="flex items-center">
           <h5 className="pl-5 font-[600]">Default</h5>
         </div>
         <div className="pl-8 flex items-center">
-          <h6 className="text-[12px] 800px:text-[unset]">
+          <h6 className="max-md:text-[12px] text-[unset]">
             494 Erdman Pasaage, New Zoietown, Paraguay
           </h6>
         </div>
         <div className="pl-8 flex items-center">
-          <h6 className="text-[12px] 800px:text-[unset]">(213) 840-9416</h6>
+          <h6 className="max-md:text-[12px] text-[unset]">(213) 840-9416</h6>
         </div>
         <div className="min-w-[10%] flex items-center justify-between pl-8">
           <AiOutlineDelete size={25} className="cursor-pointer" />
