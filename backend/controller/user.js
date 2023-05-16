@@ -372,6 +372,7 @@ router.put(
     })
 );
 
+// this means adding new user address not updating existing address
 // update user addresses
 router.put(
     "/update-user-addresses",
@@ -380,16 +381,21 @@ router.put(
         try {
             const user = await User.findById(req.user.id);
 
+            // find that address of user where addresstype is same as requested add
             const sameTypeAddress = user.addresses.find(
                 (address) => address.addressType === req.body.addressType
             );
+
+            // return addess is addressType already exists 
             if (sameTypeAddress) {
                 return next(
                     new ErrorHandler(`${req.body.addressType} address already exists`)
                 );
             }
 
+            // to check address is exists of not if exists then update otherwise push
             const existsAddress = user.addresses.find(
+                // it is id of address array => object element (0 obj) (1 obj) ... to check that address is present in db or not
                 (address) => address._id === req.body._id
             );
 
@@ -397,6 +403,7 @@ router.put(
                 Object.assign(existsAddress, req.body);
             } else {
                 // add the new address to the array
+                // here addresses is array of addresses of user
                 user.addresses.push(req.body);
             }
 
@@ -421,12 +428,14 @@ router.delete(
             const userId = req.user._id;
             const addressId = req.params.id;
 
-            console.log(addressId);
+            // console.log(addressId);
 
             await User.updateOne(
                 {
+                    // id remain same we store again the existing id
                     _id: userId,
                 },
+                // pull means deleting addressId whose id is _id(addressId)
                 { $pull: { addresses: { _id: addressId } } }
             );
 

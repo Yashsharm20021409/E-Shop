@@ -508,7 +508,7 @@ const Address = () => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [addressType, setAddressType] = useState("");
-  const { user } = useSelector((state) => state.user);
+  const { user , error , successMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const addressTypeData = [
@@ -522,6 +522,17 @@ const Address = () => {
       name: "Office",
     },
   ];
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch({ type: "clearErrors" });
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch({ type: "clearMessages" });
+    }
+  }, [error, successMessage]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
