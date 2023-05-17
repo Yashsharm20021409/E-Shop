@@ -466,7 +466,7 @@ router.put(
 
             if (req.body.newPassword !== req.body.confirmPassword) {
                 return next(
-                    new ErrorHandler("Password doesn't matched with each other!", 400)
+                    new ErrorHandler("newPassword and confirm passwords are not match!", 400)
                 );
             }
             user.password = req.body.newPassword;
