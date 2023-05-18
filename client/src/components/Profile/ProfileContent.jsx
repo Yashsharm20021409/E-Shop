@@ -92,7 +92,7 @@ const ProfileContent = ({ active }) => {
                   className="hidden"
                   onChange={handleImage}
                 />
-                <label htmlFor="image">
+                <label htmlFor="image" className="cursor-pointer">
                   <AiOutlineCamera />
                 </label>
               </div>

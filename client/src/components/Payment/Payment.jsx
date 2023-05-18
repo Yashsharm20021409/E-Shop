@@ -5,11 +5,11 @@ import styles from "../../styles/style";
 const Payment = () => {
   return (
     <div className="w-full flex flex-col items-center py-8">
-      <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
-        <div className="w-full 800px:w-[65%]">
+      <div className="max-lg:w-[90%] w-[70%] max-md:block flex">
+        <div className="max-md:w-full w-[65%]">
           <PaymentInfo />
         </div>
-        <div className="w-full 800px:w-[35%] 800px:mt-0 mt-8">
+        <div className="max-md:w-full w-[35%] mt-0 max-md:mt-8">
           <CartData />
         </div>
       </div>
@@ -27,7 +27,7 @@ const PaymentInfo = () => {
   };
 
   return (
-    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
+    <div className="max-md:w-full w-[95%] bg-[#fff] rounded-md p-5 pb-8">
       {/* select buttons */}
       <div>
         <div className="flex w-full pb-5 border-b mb-2">
