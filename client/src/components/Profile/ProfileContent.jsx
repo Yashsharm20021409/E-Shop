@@ -285,18 +285,15 @@ const AllOrders = () => {
 };
 
 const AllRefundOrders = () => {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
+
+  const eligibleOrders = orders && orders.filter((item) => item.status === "Processing refund");
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -338,7 +335,7 @@ const AllRefundOrders = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/order/${params.id}`}>
+            <Link to={`/user/order/${params.id}`}>
               <Button>
                 <AiOutlineArrowRight size={20} />
               </Button>
@@ -351,13 +348,13 @@ const AllRefundOrders = () => {
 
   const row = [];
 
-  orders &&
-    orders.forEach((item) => {
+  eligibleOrders &&
+  eligibleOrders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US$ " + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 
@@ -375,18 +372,13 @@ const AllRefundOrders = () => {
 };
 
 const TrackOrder = () => {
-  const orders = [
-    {
-      _id: "7463hvbfbhfbrtr28820221",
-      orderItems: [
-        {
-          name: "Iphone 14 pro max",
-        },
-      ],
-      totalPrice: 120,
-      orderStatus: "Processing",
-    },
-  ];
+  const { user } = useSelector((state) => state.user);
+  const { orders } = useSelector((state) => state.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllOrdersOfUser(user._id));
+  }, []);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -426,7 +418,7 @@ const TrackOrder = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/order/${params.id}`}>
+            <Link to={`/user/track/order/${params.id}`}>
               <Button>
                 <MdOutlineTrackChanges size={20} />
               </Button>
@@ -443,9 +435,9 @@ const TrackOrder = () => {
     orders.forEach((item) => {
       row.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
+        itemsQty: item.cart.length,
         total: "US$ " + item.totalPrice,
-        status: item.orderStatus,
+        status: item.status,
       });
     });
 

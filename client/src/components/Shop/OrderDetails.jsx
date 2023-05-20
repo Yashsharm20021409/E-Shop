@@ -25,14 +25,13 @@ const OrderDetails = () => {
   // filter the required order to show
   const data = orders && orders.find((item) => item._id === id);
 
-//   updating status or order
+  //   updating status or order
   const orderUpdateHandler = async (e) => {
     await axios
       .put(
         `${server}/order/update-order-status/${id}`,
         {
           status,
-          
         },
         { withCredentials: true }
       )
@@ -45,22 +44,24 @@ const OrderDetails = () => {
       });
   };
 
+  // same as UserOrderDetails for user (this is the api call to accept the refunf by seller)
   const refundOrderUpdateHandler = async (e) => {
-//     await axios
-//       .put(
-//         `${server}/order/order-refund-success/${id}`,
-//         {
-//           status,
-//         },
-//         { withCredentials: true }
-//       )
-//       .then((res) => {
-//         toast.success("Order updated!");
-//         dispatch(getAllOrdersOfShop(seller._id));
-//       })
-//       .catch((error) => {
-//         toast.error(error.response.data.message);
-//       });
+    await axios
+      .put(
+        `${server}/order/order-refund-success/${id}`,
+        {
+          status,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        toast.success("Order updated!");
+        // after updating we again fetch allOrder
+        dispatch(getAllOrdersOfShop(seller._id));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
 
   console.log(data?.status);
@@ -146,7 +147,7 @@ const OrderDetails = () => {
       <h4 className="pt-3 text-[20px] font-[600]">Order Status:</h4>
       {data?.status !== "Processing refund" && data?.status !== "Refund Success" && (
           <select
-            value={status}
+            value={status} 
             onChange={(e) => setStatus(e.target.value)}
             className="w-[200px] mt-2 border h-[35px] rounded-[5px]"
           >
@@ -176,8 +177,8 @@ const OrderDetails = () => {
           </select>
         )}
 
-
-      {data?.status === "Processing refund" || data?.status === "Refund Success" ? (
+      {data?.status === "Processing refund" ||
+      data?.status === "Refund Success" ? (
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}

@@ -52,15 +52,20 @@ const UserOrderDetails = () => {
       });
   };
 
+  // same as OrderDetails(use in seller/shop)
   const refundHandler = async () => {
-    // await axios.put(`${server}/order/order-refund/${id}`,{
-    //   status: "Processing refund"
-    // }).then((res) => {
-    //    toast.success(res.data.message);
-    // dispatch(getAllOrdersOfUser(user._id));
-    // }).catch((error) => {
-    //   toast.error(error.response.data.message);
-    // })
+    await axios
+      .put(`${server}/order/order-refund/${id}`, {
+        status: "Processing refund",
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        // after updaing we again fetch all order
+        dispatch(getAllOrdersOfUser(user._id));
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      });
   };
 
   return (
