@@ -4,17 +4,19 @@ import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationP
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useEffect } from 'react';
-// import axios from 'axios';
-// import { server } from './server';
+import React, { useEffect, useState } from 'react';
 import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents,ShopAllCoupouns,ShopPreviewPage, } from "./routes/ShopRoutes.js"
+import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
+import axios from 'axios';
+import { server } from './server';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 function App() {
 
@@ -27,15 +29,32 @@ function App() {
   //   .catch((err)=>{toast.error(err.response.data.message)});
   // },[])
 
+  const [stripeApikey, setStripeApiKey] = useState("");
+
+  async function getStripeApikey() {
+    const { data } = await axios.get(`${server}/payment/stripeapikey`);
+    setStripeApiKey(data.stripeApikey);
+  }
+  // console.log(stripeApikey);
+
   useEffect(() => {
     Store.dispatch(loaduser());
     Store.dispatch(loadSeller());
     Store.dispatch(getAllProducts());
     Store.dispatch(getAllEvents());
+    getStripeApikey();
   }, []);
+
 
   return (
     <BrowserRouter>
+      {stripeApikey && (
+        <Elements stripe={loadStripe(stripeApikey)}>
+          <Routes>
+            <Route path="/payment" element={<ProtectedRoute> <PaymentPage /> </ProtectedRoute>}/>
+          </Routes>
+        </Elements>
+      )}
       <Routes>
         <Route path='/' element={<HomePage />} > </Route>
         <Route exact path='/login' element={<LoginPage />} > </Route>
@@ -51,8 +70,8 @@ function App() {
           <ProtectedRoute>
             <CheckoutPage />
           </ProtectedRoute>} />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/order/success/:id" element={<OrderSuccessPage />} />
+        {/* <Route path="/payment" element={<PaymentPage />} /> */}
+        <Route path="/order/success" element={<OrderSuccessPage />} />
         {/* to avoid access profile page (if !isAuthenticted redirect user to navigate otherwise navigate to children(Profile page)) */}
         <Route path="/profile" element={
           <ProtectedRoute >
