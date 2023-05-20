@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage } from "./routes/RoutesLink"
+import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage ,OrderDetailsPage} from "./routes/RoutesLink"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +9,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, } from "./routes/ShopRoutes.js"
+import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, ShopAllOrders, ShopOrderDetails } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
@@ -51,7 +51,7 @@ function App() {
       {stripeApikey && (
         <Elements stripe={loadStripe(stripeApikey)}>
           <Routes>
-            <Route path="/payment" element={<ProtectedRoute> <PaymentPage /> </ProtectedRoute>}/>
+            <Route path="/payment" element={<ProtectedRoute> <PaymentPage /> </ProtectedRoute>} />
           </Routes>
         </Elements>
       )}
@@ -70,13 +70,21 @@ function App() {
           <ProtectedRoute>
             <CheckoutPage />
           </ProtectedRoute>} />
-        {/* <Route path="/payment" element={<PaymentPage />} /> */}
         <Route path="/order/success" element={<OrderSuccessPage />} />
         {/* to avoid access profile page (if !isAuthenticted redirect user to navigate otherwise navigate to children(Profile page)) */}
         <Route path="/profile" element={
           <ProtectedRoute >
             <ProfilePage />
           </ProtectedRoute>} />
+
+        <Route
+          path="/user/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetailsPage />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Shop Routes */}
         <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
@@ -103,6 +111,22 @@ function App() {
           element={
             <SellerProtectedRoute >
               <ShopCreateProduct />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-orders"
+          element={
+            <SellerProtectedRoute>
+              <ShopAllOrders />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <SellerProtectedRoute>
+              <ShopOrderDetails />
             </SellerProtectedRoute>
           }
         />

@@ -16,6 +16,7 @@ import {
   addToWishlist,
   removeFromWishlist,
 } from "../../../redux/actions/wishlist";
+import Ratings from "../../Products/Ratings";
 
 const ProductCard = ({ data, isEvent }) => {
   const { cart } = useSelector((state) => state.cart);
@@ -94,9 +95,9 @@ const ProductCard = ({ data, isEvent }) => {
             {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
           </h4>
 
-          {/* <div className="flex">
+          <div className="flex">
           <Ratings rating={data?.ratings} />
-          </div> */}
+          </div>
 
           <div className="py-2 flex items-center justify-between">
             <div className="flex">

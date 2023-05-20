@@ -55,6 +55,9 @@ const productSchema = new mongoose.Schema({
     ratings: {
         type: Number,
     },
+    avgRatings:{
+        type:Number,
+    },
     shopId: {
         type: String,
         required: true,

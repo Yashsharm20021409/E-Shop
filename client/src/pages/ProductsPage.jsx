@@ -27,7 +27,7 @@ const ProductsPage = () => {
     // allProducts dependency is important to give here otherwise on reload you will show nothing in products section
   }, [allProducts]);
 
-  return (
+  return ( 
     <>
       {isLoading ? (
         <Loader />

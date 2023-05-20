@@ -5,8 +5,9 @@ const { upload } = require("../multer");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utilis/ErrorHandler");
 const Shop = require("../model/shop");
-const { isSeller } = require("../middleware/auth");
+const { isSeller, isAuthenticated } = require("../middleware/auth");
 const fs = require("fs");
+const Order = require("../model/order");
 
 
 // create Product
@@ -25,6 +26,8 @@ router.post("/create-product", upload.array("images"), catchAsyncErrors(async (r
             const imageUrls = files.map((file) => `${file.filename}`);
 
             const productData = req.body;
+            // const sold = productData.sold_out;
+            // productData.sold_out = sold && sold  
             productData.images = imageUrls;
             productData.shop = shop;
 
@@ -110,6 +113,63 @@ router.get(
         }
     })
 );
+
+// review for product
+router.put("/create-new-review", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+    try {
+        const { user, rating, comment, productId, orderId } = req.body;
+
+        const product = await Product.findById(productId);
+
+        const review = {
+            user, rating, comment, productId,
+        };
+
+        // check if already have revied on this products by this user if have then update otherwise push new review
+        const isReviewd = product.reviews.find((rev) => rev.user._id === req.user._id);
+
+        if (isReviewd) {
+            // on all differ user reviews we filter current user review
+            product.reviews.forEach((rev) => {
+                if (rev.user._id === req.user._id) {
+                    (rev.rating = rating),
+                        (rev.comment = comment),
+                        (rev.user = user)
+                }
+            });
+        }
+        else {
+            // product k inside jo review array a usme review push
+            product.reviews.push(review);
+        }
+
+        // find avg rating of product
+        let avg = 0;
+
+        // traverse on all reviews of product by diff user
+        product.reviews.forEach((rev) => {
+            avg += rev.rating;
+        });
+
+        product.avgRatings = avg / product.reviews.length;
+
+        await product.save({ validateBeforeSave: false });
+
+        // updating Products in order also
+        await Order.findByIdAndUpdate(
+            orderId,
+            { $set: { "cart.$[elem].isReviewed": true } },
+            { arrayFilters: [{ "elem._id": productId }], new: true }
+        );
+        res.status(200).json({
+            success: true,
+            message: "Reviwed succesfully!",
+        });
+
+    } catch (error) {
+        return next(new ErrorHandler(error, 400));
+    }
+}))
 
 
 module.exports = router;
