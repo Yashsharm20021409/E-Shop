@@ -29,6 +29,10 @@ const ProductDetails = ({ data }) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // const { id } = useParams();
 
   useEffect(() => {
@@ -207,6 +211,9 @@ const ProductDetails = ({ data }) => {
 
 const ProductDetailsInfo = ({ data, products }) => {
   const [active, setActive] = useState(1);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">

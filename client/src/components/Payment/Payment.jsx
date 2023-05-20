@@ -9,12 +9,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+// import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
-import { RxCross1 } from "react-icons/rx";
+// import { RxCross1 } from "react-icons/rx";
 
 const Payment = () => {
   const { user } = useSelector((state) => state.user);
@@ -32,7 +32,28 @@ const Payment = () => {
     setOrderData(orderData);
   }, []);
 
-  const createOrder = (data, actions) => {};
+  // this is for paypal
+  // const createOrder = (data, actions) => {
+  //   return actions.order
+  //     .create({
+  //       purchase_units: [
+  //         {
+  //           description: "Sunflower",
+  //           amount: {
+  //             currency_code: "INR",
+  //             value: orderData?.totalPrice,
+  //           },
+  //         },
+  //       ],
+  //       // not needed if a shipping address is actually needed
+  //       application_context: {
+  //         shipping_preference: "NO_SHIPPING",
+  //       },
+  //     })
+  //     .then((orderID) => {
+  //       return orderID;
+  //     });
+  // };
 
   // order object
   const order = {
@@ -42,11 +63,45 @@ const Payment = () => {
     totalPrice: orderData?.totalPrice,
   };
 
-  const onApprove = async (data, actions) => {};
+  // const onApprove = async (data, actions) => {
+  //   return actions.order.capture().then(function (details) {
+  //     const { payer } = details;
 
-  const paypalPaymentHandler = async (paymentInfo) => {};
+  //     let paymentInfo = payer;
+
+  //     if (paymentInfo !== undefined) {
+  //       paypalPaymentHandler(paymentInfo);
+  //     }
+  //   });
+  // };
+
+  // const paypalPaymentHandler = async (paymentInfo) => {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
+
+  //   order.paymentInfo = {
+  //     id: paymentInfo.payer_id,
+  //     status: "succeeded",
+  //     type: "Paypal",
+  //   };
+
+  //   await axios
+  //     .post(`${server}/order/create-order`, order, config)
+  //     .then((res) => {
+  //       setOpen(false);
+  //       navigate("/order/success");
+  //       toast.success("Order successful!");
+  //       localStorage.setItem("cartItems", JSON.stringify([]));
+  //       localStorage.setItem("latestOrder", JSON.stringify([]));
+  //       window.location.reload();
+  //     });
+  // };
 
   // to convert into INR
+  
   const paymentData = {
     amount: Math.round(orderData?.totalPrice * 100),
   };
@@ -107,6 +162,28 @@ const Payment = () => {
 
   const cashOnDeliveryHandler = async (e) => {
     e.preventDefault();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    // adding payment info tp order object
+    order.paymentInfo = {
+      type: "Cash On Delivery",
+    };
+
+    await axios
+    .post(`${server}/order/create-order`, order, config)
+    .then((res) => {
+      setOpen(false);
+      navigate("/order/success");
+      toast.success("Order successful!");
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      localStorage.setItem("latestOrder", JSON.stringify([]));
+      window.location.reload();
+    });
   };
 
   return (
@@ -117,8 +194,8 @@ const Payment = () => {
             user={user}
             open={open}
             setOpen={setOpen}
-            onApprove={onApprove}
-            createOrder={createOrder}
+            // onApprove={onApprove}
+            // createOrder={createOrder}
             paymentHandler={paymentHandler}
             cashOnDeliveryHandler={cashOnDeliveryHandler}
           />
@@ -248,9 +325,11 @@ const PaymentInfo = ({user,open,setOpen,onApprove,createOrder,paymentHandler,cas
       </div>
 
       <br />
+
+      {/* Not used currently */}
       {/* paypal payment */}
       <div>
-        <div className="flex w-full pb-5 border-b mb-2">
+        {/* <div className="flex w-full pb-5 border-b mb-2">
           <div
             className="w-[25px] h-[25px] rounded-full bg-transparent border-[3px] border-[#1d1a1ab4] relative flex items-center justify-center"
             onClick={() => setSelect(2)}
@@ -262,10 +341,10 @@ const PaymentInfo = ({user,open,setOpen,onApprove,createOrder,paymentHandler,cas
           <h4 className="text-[18px] pl-2 font-[600] text-[#000000b1]">
             Pay with Paypal
           </h4>
-        </div>
+        </div> */}
 
         {/* pay with payement */}
-        {select === 2 ? (
+        {/* {select === 2 ? (
           <div className="w-full flex border-b">
             <div
               className={`${styles.button} !bg-[#f63b60] text-white h-[45px] rounded-[5px] cursor-pointer text-[18px] font-[600]`}
@@ -286,7 +365,7 @@ const PaymentInfo = ({user,open,setOpen,onApprove,createOrder,paymentHandler,cas
                   <PayPalScriptProvider
                     options={{
                       "client-id":
-                        "Aczac4Ry9_QA1t4c7TKH9UusH3RTe6onyICPoCToHG10kjlNdI-qwobbW9JAHzaRQwFMn2-k660853jn",
+                        "ASXIJZpHa_i2-Gxepi8ED5RX_MtcwEN_jeed4Bgrk44QB5ZpSgoWB8Ms5ahw1aJ4-c2554KCrqFBYHov",
                     }}
                   >
                     <PayPalButtons
@@ -299,7 +378,7 @@ const PaymentInfo = ({user,open,setOpen,onApprove,createOrder,paymentHandler,cas
               </div>
             )}
           </div>
-        ) : null}
+        ) : null} */}
       </div>
 
       <br />
