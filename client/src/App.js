@@ -9,7 +9,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, ShopAllOrders, ShopOrderDetails , ShopAllRefunds} from "./routes/ShopRoutes.js"
+import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, ShopAllOrders, ShopOrderDetails , ShopAllRefunds,ShopSettingsPage,ShopWithDrawMoneyPage} from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
@@ -106,6 +106,14 @@ function App() {
             </SellerProtectedRoute>
           }
         />
+          <Route
+          path="/settings"
+          element={
+            <SellerProtectedRoute>
+              <ShopSettingsPage />
+            </SellerProtectedRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
@@ -178,6 +186,14 @@ function App() {
           element={
             <SellerProtectedRoute>
               <ShopAllCoupouns />
+            </SellerProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard-withdraw-money"
+          element={
+            <SellerProtectedRoute>
+              <ShopWithDrawMoneyPage />
             </SellerProtectedRoute>
           }
         />

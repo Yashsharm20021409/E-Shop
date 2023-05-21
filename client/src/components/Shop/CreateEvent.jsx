@@ -88,7 +88,7 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="w-[90%]  bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll max-md:w-[50%]">
+    <div className="w-[90%]   bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll max-md:w-[95%]">
       <h5 className="text-[30px] font-Poppins text-center">Create Event</h5>
       {/* create event form */}
       <form onSubmit={handleSubmit}>

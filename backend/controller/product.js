@@ -151,7 +151,7 @@ router.put("/create-new-review", isAuthenticated, catchAsyncErrors(async (req, r
             avg += rev.rating;
         });
 
-        product.avgRatings = avg / product.reviews.length;
+        product.ratings = avg / product.reviews.length;
 
         await product.save({ validateBeforeSave: false });
 

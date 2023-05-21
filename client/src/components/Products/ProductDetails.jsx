@@ -96,6 +96,7 @@ const ProductDetails = ({ data }) => {
   const avg = totalRatings / totalReviewsLength || 0;
 
   const averageRating = avg.toFixed(2);
+  console.log(averageRating)
 
   const handleMessageSubmit = () => {
     navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
@@ -244,6 +245,8 @@ const ProductDetailsInfo = ({
     window.scrollTo(0, 0);
   }, []);
 
+  console.log("rat:",data?.ratings)
+
   return (
     <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
       <div className="w-full flex justify-between border-b pt-10 pb-2">
@@ -309,6 +312,7 @@ const ProductDetailsInfo = ({
                   <div className="w-full flex items-center">
                     <h1 className="font-[500] mr-3">{item.user.name}</h1>
                     <Ratings rating={data?.ratings} />
+                    
                   </div>
                   <p>{item.comment}</p>
                 </div>
