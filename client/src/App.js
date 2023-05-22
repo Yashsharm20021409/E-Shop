@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage, OrderDetailsPage, TrackOrderPage } from "./routes/RoutesLink"
+import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage, OrderDetailsPage, TrackOrderPage,UserInbox } from "./routes/RoutesLink"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -9,7 +9,7 @@ import Store from './redux/store';
 import { loadSeller, loaduser } from './redux/actions/user';
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SellerProtectedRoute from "./routes/SellerProtectedRoute"
-import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, ShopAllOrders, ShopOrderDetails , ShopAllRefunds,ShopSettingsPage,ShopWithDrawMoneyPage} from "./routes/ShopRoutes.js"
+import { ShopDashboardPage, ShopCreateProduct, ShopAllProducts, ShopCreateEvents, ShopAllEvents, ShopAllCoupouns, ShopPreviewPage, ShopAllOrders, ShopOrderDetails, ShopAllRefunds, ShopSettingsPage, ShopWithDrawMoneyPage,ShopInboxPage  } from "./routes/ShopRoutes.js"
 import { ShopHomePage } from "./shopRoutes"
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
@@ -93,6 +93,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/inbox"
+          element={
+            <ProtectedRoute>
+              <UserInbox />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Shop Routes */}
         <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
@@ -106,7 +114,7 @@ function App() {
             </SellerProtectedRoute>
           }
         />
-          <Route
+        <Route
           path="/settings"
           element={
             <SellerProtectedRoute>
@@ -194,6 +202,15 @@ function App() {
           element={
             <SellerProtectedRoute>
               <ShopWithDrawMoneyPage />
+            </SellerProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard-messages"
+          element={
+            <SellerProtectedRoute>
+              <ShopInboxPage />
             </SellerProtectedRoute>
           }
         />

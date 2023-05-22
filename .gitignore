@@ -1,3 +1,5 @@
 backend/config/.env
 client/node_modules
 /node_modules
+socket/node_modules
+socket/.env

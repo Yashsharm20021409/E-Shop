@@ -17,12 +17,13 @@ import {
 import { addTocart } from "../../redux/actions/cart";
 import { toast } from "react-toastify";
 import Ratings from "./Ratings";
+import axios from "axios";
 
 const ProductDetails = ({ data }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
   const { products } = useSelector((state) => state.products);
-
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
@@ -98,8 +99,31 @@ const ProductDetails = ({ data }) => {
   const averageRating = avg.toFixed(2);
   console.log(averageRating)
 
-  const handleMessageSubmit = () => {
-    navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
+  const handleMessageSubmit = async () => {
+    // check if user is loggedIn or not
+    if (isAuthenticated) {
+      // group tile product id + user id
+      const groupTitle = data._id + user._id;
+      const userId = user._id;
+      const sellerId = data.shop._id;
+
+      //make req for creating the convo
+      await axios
+        .post(`${server}/conversation/create-new-conversation`, {
+          groupTitle,
+          userId,
+          sellerId,
+        })
+        .then((res) => {
+          // after getting response navigate to created convo id
+          navigate(`/inbox?${res.data.conversation._id}`);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+        });
+    } else {
+      toast.error("Please login to create a conversation");
+    }
   };
 
   return (

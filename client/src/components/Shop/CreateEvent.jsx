@@ -30,7 +30,7 @@ const CreateEvent = () => {
     setStartDate(startDate);
     setEndDate(null);
     // set  min value ise kam ni hone chye date eslye
-    document.getElementById("end-date").min = minEndDate.toISOString().slice(0,10);
+    document.getElementById("end-date").min = minEndDate?.toISOString().slice(0,10);
   };
 
   const handleEndDateChange = (e) => {
@@ -39,7 +39,7 @@ const CreateEvent = () => {
   };
 
   const today = new Date().toISOString().slice(0, 10);
-  // console.log(today);
+  console.log(today);
 
   // is minEndDate date have then change format of date otherwise store null
   const minEndDate = startDate
@@ -218,7 +218,7 @@ const CreateEvent = () => {
           <input
             type="date"
             name="price"
-            id="start-date"
+            id="end-date"
             // is start date have then change format of date otherwise store null
             value={endDate ? endDate.toISOString().slice(0, 10) : ""}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
