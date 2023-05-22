@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import styles from "../../styles/style";
 import { categoriesData } from "../../static/data";
 import {
@@ -55,12 +55,19 @@ const Header = ({ activeHeading }) => {
     }
   });
 
+  const navigate = useNavigate();
+
+  const handleHomePage =()=>{
+    window.location.reload();
+    navigate("/");
+  }
+
   return (
     <>
       <div className={`${styles.section}`}>
         <div className="800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between flex">
           <div>
-            <Link to="/">
+            {/* <Link onClick={handleHomePage}> */}
               {/* <img
                 src="https://shopo.quomodothemes.website/assets/images/logo.svg"
                 alt=""
@@ -71,10 +78,11 @@ const Header = ({ activeHeading }) => {
                   fontSize: "30px",
                   color: "#1e5556",
                 }}
+                onClick={handleHomePage}
               >
                 E-Shop.
               </h3>
-            </Link>
+            {/* </Link> */}
           </div>
           {/* search box */}
           <div className="w-[50%] relative">
@@ -117,7 +125,7 @@ const Header = ({ activeHeading }) => {
             className={`${styles.button}`}
             style={{ backgroundColor: "#1e5556" }}
           >
-            <Link to="/shop-create">
+            <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
               <h1 className="text-[#fff] flex items-center">
                 {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
                 <IoIosArrowForward className="ml-1" />
