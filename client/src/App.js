@@ -229,9 +229,9 @@ function App() {
         <Route
           path="/admin/dashboard"
           element={
-            // <ProtectedAdminRoute>
+            <ProtectedAdminRoute>
               <AdminDashboardPage />
-            // </ProtectedAdminRoute>
+            </ProtectedAdminRoute>
           }
         />
         <Route
@@ -250,38 +250,38 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/admin-orders"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardOrders />
             </ProtectedAdminRoute>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin-products"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardProducts />
             </ProtectedAdminRoute>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin-events"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardEvents />
             </ProtectedAdminRoute>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/admin-withdraw-request"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardWithdraw />
             </ProtectedAdminRoute>
           }
-        />
+        /> */}
 
 
       </Routes>

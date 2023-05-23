@@ -100,7 +100,7 @@ const AdminSideBar = ({ active }) => {
             color={`${active === 6 ? "crimson" : "#555"}`}
           />
           <h5
-            className={`block max-md:hiddenpl-2 text-[18px] font-[400] ${
+            className={`block max-md:hidden pl-2 text-[18px] font-[400] ${
               active === 6 ? "text-[crimson]" : "text-[#555]"
             }`}
           >

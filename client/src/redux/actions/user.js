@@ -86,7 +86,7 @@ export const updateUserInformation =
 
 // update user address
 export const updatUserAddress =
-  (country,state, city, address1, address2, zipCode, addressType) =>
+  (country, state, city, address1, address2, zipCode, addressType) =>
     async (dispatch) => {
       try {
         dispatch({
@@ -144,6 +144,29 @@ export const deleteUserAddress = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: "deleteUserAddressFailed",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// get all users --- admin
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: "getAllUsersRequest",
+    });
+
+    const { data } = await axios.get(`${server}/user/admin-all-users`, {
+      withCredentials: true,
+    });
+
+    dispatch({
+      type: "getAllUsersSuccess",
+      payload: data.users,
+    });
+  } catch (error) {
+    dispatch({
+      type: "getAllUsersFailed",
       payload: error.response.data.message,
     });
   }

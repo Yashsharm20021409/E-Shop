@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken")
 const sendMail = require("../utilis/sendMail")
 const sendToken = require("../utilis/jwtToken")
 const sendShopToken = require("../utilis/shopToken");
-const { isSeller } = require('../middleware/auth');
+const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
 const Shop = require("../model/shop");
 
 
@@ -221,7 +221,7 @@ router.put(
             // }
 
             // deleting previous image
-            if(existAvatarPath){
+            if (existAvatarPath) {
                 fs.unlinkSync(existAvatarPath);
             }
 
@@ -273,6 +273,22 @@ router.put(
             return next(new ErrorHandler(error.message, 500));
         }
     })
+);
+
+// all sellers --- for admin
+router.get("/admin-all-sellers", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+    try {
+        const sellers = await Shop.find().sort({
+            createdAt: -1,
+        });
+        res.status(201).json({
+            success: true,
+            sellers,
+        });
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
+})
 );
 
 module.exports = router;

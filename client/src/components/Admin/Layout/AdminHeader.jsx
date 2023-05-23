@@ -12,7 +12,7 @@ const AdminHeader = () => {
   const navigate = useNavigate();
 
   const handleHomePage =()=>{
-    window.location.reload();
+    // window.location.reload();
     navigate("/");
   }
 

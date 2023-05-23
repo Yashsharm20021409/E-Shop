@@ -5,17 +5,17 @@ const User = require("../model/user");
 const Shop = require("../model/shop");
 
 // check user is login is yes then call next(to load the user)
-exports.isAuthenticated = catchAsyncErrors(async(req,res,next)=>{
+exports.isAuthenticated = catchAsyncErrors(async (req, res, next) => {
     // fetch token of user from cookies
-    const {token} = req.cookies;
+    const { token } = req.cookies;
 
     // if token not exist means either user is not loged in or user is not created yet
-    if(!token){
-        return next(new ErrorHandler("Please Login to Continue",401));
+    if (!token) {
+        return next(new ErrorHandler("Please Login to Continue", 401));
     }
 
     // decode the token
-    const decode = jwt.verify(token,process.env.JWT_SECRET_KEY);
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     req.user = await User.findById(decode.id);
 
@@ -23,9 +23,9 @@ exports.isAuthenticated = catchAsyncErrors(async(req,res,next)=>{
     next();
 })
 
-exports.isSeller = catchAsyncErrors(async(req,res,next) => {
-    const {seller_token} = req.cookies;
-    if(!seller_token){
+exports.isSeller = catchAsyncErrors(async (req, res, next) => {
+    const { seller_token } = req.cookies;
+    if (!seller_token) {
         return next(new ErrorHandler("Please login to continue", 401));
     }
 
@@ -35,3 +35,14 @@ exports.isSeller = catchAsyncErrors(async(req,res,next) => {
 
     next();
 });
+
+// it recive role paramter from object thats why we did this ...roles
+exports.isAdmin = (...roles) => {
+    return (req, res, next) => {
+        // if roles not include req.user.role then return error otherwise next()
+        if (!roles.includes(req.user.role)) {
+            return next(new ErrorHandler(`${req.user.role} can not access this resources!`))
+        };
+        next(); 
+    }
+}
