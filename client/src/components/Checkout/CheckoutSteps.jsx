@@ -5,7 +5,7 @@ const CheckoutSteps = ({active}) => {
     console.log(active);
   return (
     <div className='w-full flex justify-center '>
-        <div className="max-md:w-[100%] w-[50%] flex items-center flex-wrap ">
+        <div className="max-md:w-[100%] w-[50%] flex items-center flex-wrap max-md:justify-center">
                <div className={`${styles.normalFlex}`}>
                 <div className={`${styles.cart_button} max-md:h-[28px] max-md:w-[70px]`}>
                        <span className={`${styles.cart_button_text} max-md:text-xs`} >1.Shipping</span>

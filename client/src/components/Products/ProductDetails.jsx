@@ -129,14 +129,14 @@ const ProductDetails = ({ data }) => {
   return (
     <div className="bg-white">
       {data ? (
-        <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
+        <div className={`${styles.section} max-md:w-[90%] w-[80%]`}>
           <div className="w-full py-5">
-            <div className="flex w-full 800px:flex">
-              <div className="w-full 800px:w-[50%]">
+            <div className="flex w-full  max-md:block">
+              <div className="max-md:w-full w-[50%] max-md:flex max-md:flex-wrap max-md:justify-center">
                 <img
                   src={`${backend_url}${data && data.images[select]}`}
                   alt=""
-                  className="w-[80%]"
+                  className="w-[80%] max-md:w-[90%]"
                 />
                 <div className="w-full flex">
                   {data &&
@@ -156,7 +156,7 @@ const ProductDetails = ({ data }) => {
                     ))}
                 </div>
               </div>
-              <div className="w-full 800px:w-[50%] pt-5">
+              <div className="max-md:w-full w-[50%] pt-5">
                 <h1 className={`${styles.productTitle}`}>{data.name}</h1>
                 <p>{data.description}</p>
                 <div className="flex pt-3">
@@ -272,12 +272,12 @@ const ProductDetailsInfo = ({
   console.log("rat:",data?.ratings)
 
   return (
-    <div className="bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded">
+    <div className="bg-[#f5f6fb] max-md:px-3 px-10 py-2 rounded">
       <div className="w-full flex justify-between border-b pt-10 pb-2">
         <div className="relative">
           <h5
             className={
-              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+              "text-[#000] max-md:text-[18px] px-1 leading-5 font-[600] cursor-pointer text-[20px]"
             }
             onClick={() => setActive(1)}
           >
@@ -290,7 +290,7 @@ const ProductDetailsInfo = ({
         <div className="relative">
           <h5
             className={
-              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+              "text-[#000] max-md:text-[18px] px-1 leading-5 font-[600] cursor-pointer text-[20px]"
             }
             onClick={() => setActive(2)}
           >
@@ -303,7 +303,7 @@ const ProductDetailsInfo = ({
         <div className="relative">
           <h5
             className={
-              "text-[#000] text-[18px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+              "text-[#000] max-md:text-[18px] px-1 leading-5 font-[600] cursor-pointer text-[20px]"
             }
             onClick={() => setActive(3)}
           >
@@ -351,8 +351,8 @@ const ProductDetailsInfo = ({
       ) : null}
 
       {active === 3 && (
-        <div className="w-full  flex p-5 max-md:flex-col">
-          <div className="w-full max-md:w-[50%]">
+        <div className="w-full  flex p-5 max-md:block">
+          <div className="max-md:w-full w-[50%]">
             <Link to={`/shop/preview/${data.shop._id}`}>
               <div className="flex items-center">
                 <img
@@ -368,7 +368,7 @@ const ProductDetailsInfo = ({
             </Link>
             <p className="pt-2">{data.shop.description}</p>
           </div>
-          <div className="w-full max-md:w-[50%] mt-5 max-md:mt-0 flex flex-col items-end">
+          <div className="max-md:w-full w-[50%] max-md:mt-5 mt-0 flex max-md:flex-col items-end">
             <div className="text-left">
               <h5 className="font-[600]">
                 Joined on:{" "}
@@ -388,7 +388,7 @@ const ProductDetailsInfo = ({
                 Total Reviews:{" "}
                 <span className="font-[500]">{totalReviewsLength}</span>
               </h5>
-              <Link to="/">
+              <Link to={`/shop/preview/${data.shop._id}`}>
                 <div
                   className={`${styles.button} !rounded-[4px] !h-[39.5px] mt-3`}
                 >

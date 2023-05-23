@@ -29,9 +29,9 @@ const Cart = ({ setOpenCart }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10 ">
-      <div className="fixed top-0 right-0 h-full overflow-y-scroll  w-[80%] max-md:w-[25%] bg-white flex flex-col justify-between shadow-sm ">
+      <div className="fixed top-0 right-0 h-full overflow-y-scroll  w-[80%] max-md:w-[80%] bg-white flex flex-col justify-between shadow-sm ">
       {cart && cart.length === 0 ? (
-          <div className="w-full h-screen flex items-center justify-center">
+          <div className="w-full h-screen flex  items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
                <RxCross1 
                 size={25}
@@ -116,7 +116,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
 
   return (
     <div className="border-b p-4 ">
-      <div className="w-full flex items-center ">
+      <div className="w-full flex items-center max-md:flex-wrap">
         <div>
           <div
             className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] ${styles.normalFlex} justify-center cursor-pointer`}
@@ -135,9 +135,9 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         <img
           src={`${backend_url}${data?.images[0]}`}
           alt=""
-          className="w-[130px] h-min ml-2 mr-2 rounded-[5px]"
+          className="w-[130px] h-min ml-2 max-md:ml-9 mr-2 rounded-[5px]"
         />
-        <div className="pl-[5px]">
+        <div className="pl-[5px] max-md:ml-14">
           <h1>{data.name}</h1>
           <h4 className="font-[400] text-[15px] text-[#00000082]">
             ${data.discountPrice} * {value}
@@ -148,7 +148,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
         </div>
         <div>
         <RxCross1
-          className="cursor-pointer ml-5"
+          className="cursor-pointer ml-5 max-md:ml-28 max-md:mt-1"
           onClick={() => removeFromCartHandler(data)}
           />
           </div>
