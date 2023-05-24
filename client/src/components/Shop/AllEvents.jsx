@@ -99,8 +99,8 @@ const AllEvents = () => {
         id: item._id,
         name: item.name,
         price: "US$ " + item.discountPrice,
-        Stock: item.stock,
-        sold: item.sold_out,
+        Stock: item.stock ? item.stock: 0,
+        sold: item.sold_out ? item.sold_out : 0,
       });
     });
 

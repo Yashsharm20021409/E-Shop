@@ -325,7 +325,7 @@ const ProductDetailsInfo = ({
       {active === 2 ? (
         <div className="w-full justify-center min-h-[40vh] flex flex-col items-center">
           {data &&
-            data.reviews.map((item, index) => (
+            data.reviews?.map((item, index) => (
               <div className="w-full flex my-2">
                 <img
                   src={`${backend_url}/${item.user.avatar}`}
@@ -343,7 +343,7 @@ const ProductDetailsInfo = ({
               </div>
             ))}
           <div className="w-full flex justify-center">
-            {data && data.reviews.length === 0 && (
+            {data && (
               <h5>No Reviews have for this product!</h5>
             )}
           </div>

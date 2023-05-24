@@ -1,19 +1,20 @@
 import { Button } from "@material-ui/core";
 import { DataGrid } from "@material-ui/data-grid";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { server } from "../../server";
+import { useState } from "react";
 
-const AllEvents = () => {
-  const [events, setEvents] = useState([]);
+const AllProducts = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${server}/event/admin-all-events`, { withCredentials: true })
+      .get(`${server}/product/admin-all-products`, { withCredentials: true })
       .then((res) => {
-        setEvents(res.data.events);
+        setData(res.data.products);
       });
   }, []);
 
@@ -56,7 +57,7 @@ const AllEvents = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/product/${params.id}?isEvent=true`}>
+            <Link to={`/product/${params.id}`}>
               <Button>
                 <AiOutlineEye size={20} />
               </Button>
@@ -69,28 +70,30 @@ const AllEvents = () => {
 
   const row = [];
 
-  events &&
-    events.forEach((item) => {
+  data &&
+    data.forEach((item) => {
       row.push({
         id: item._id,
         name: item.name,
         price: "US$ " + item.discountPrice,
         Stock: item.stock,
-        sold: item.sold_out,
+        sold: item?.sold_out,
       });
     });
 
   return (
-    <div className="w-full mx-8 pt-1 mt-10 bg-white">
-      <DataGrid
-        rows={row}
-        columns={columns}
-        pageSize={7}
-        disableSelectionOnClick
-        autoHeight
-      />
-    </div>
+    <>
+      <div className="w-full mx-8 pt-1 mt-10 bg-white">
+        <DataGrid
+          rows={row}
+          columns={columns}
+          pageSize={7}
+          disableSelectionOnClick
+          autoHeight
+        />
+      </div>
+    </>
   );
 };
 
-export default AllEvents;
+export default AllProducts;

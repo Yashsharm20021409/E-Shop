@@ -250,30 +250,30 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/admin-orders"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardOrders />
             </ProtectedAdminRoute>
           }
-        /> */}
-        {/* <Route
+        />
+        <Route
           path="/admin-products"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardProducts />
             </ProtectedAdminRoute>
           }
-        /> */}
-        {/* <Route
+        />
+        <Route
           path="/admin-events"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardEvents />
             </ProtectedAdminRoute>
           }
-        /> */}
+        />
         {/* <Route
           path="/admin-withdraw-request"
           element={
