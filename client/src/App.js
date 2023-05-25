@@ -274,14 +274,14 @@ function App() {
             </ProtectedAdminRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/admin-withdraw-request"
           element={
             <ProtectedAdminRoute>
               <AdminDashboardWithdraw />
             </ProtectedAdminRoute>
           }
-        /> */}
+        />
 
 
       </Routes>

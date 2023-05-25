@@ -26,16 +26,17 @@ const WithdrawMoney = () => {
     bankAddress: "",
   });
 
-  const [deliverOrder,setDeliverOrder] = useState(null);
+  const [deliverOrder, setDeliverOrder] = useState(null);
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
     const ord = orders && orders.filter((item) => item.status === "Delivered");
     setDeliverOrder(ord);
-
   }, [dispatch]);
 
-  const totalEarningsWithoutTax = deliverOrder && deliverOrder.reduce((acc,item)=>acc + item.totalPrice,0);
+  const totalEarningsWithoutTax =
+    deliverOrder &&
+    deliverOrder.reduce((acc, item) => acc + item.totalPrice, 0);
   const serviceCharge = totalEarningsWithoutTax * 0.1;
 
   const availableBalance = totalEarningsWithoutTax - serviceCharge;
@@ -73,6 +74,7 @@ const WithdrawMoney = () => {
           bankHolderName: "",
           bankAddress: "",
         });
+        setOpen(false);
       })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -116,7 +118,7 @@ const WithdrawMoney = () => {
   return (
     <div className="w-full h-[90vh] p-8">
       <div className="w-full bg-white h-full rounded flex items-center justify-center flex-col">
-        <h5 className="text-[20px] pb-4">
+        <h5 className="text-[20px] pb-4 max-md:text-center">
           Available Balance: ${availableBalance}
         </h5>
         <div
