@@ -14,20 +14,21 @@ const DashboardHero = () => {
   const { orders } = useSelector((state) => state.order);
   const { seller } = useSelector((state) => state.seller);
   const { products } = useSelector((state) => state.products);
-  const [deliverOrder,setDeliverOrder] = useState(null);
+  // const [deliverOrder,setDeliverOrder] = useState(null);
 
   useEffect(() => {
     dispatch(getAllOrdersOfShop(seller._id));
     dispatch(getAllProductsShop(seller._id));
-    const ord = orders && orders.filter((item) => item.status === "Delivered");
-    setDeliverOrder(ord);
+    // const ord = orders && orders.filter((item) => item.status === "Delivered");
+    // setDeliverOrder(ord);
 
   }, [dispatch]);
 
-  const totalEarningsWithoutTax = deliverOrder && deliverOrder.reduce((acc,item)=>acc + item.totalPrice,0);
-  const serviceCharge = totalEarningsWithoutTax * 0.1;
+  // const totalEarningsWithoutTax = deliverOrder && deliverOrder.reduce((acc,item)=>acc + item.totalPrice,0);
+  // const serviceCharge = totalEarningsWithoutTax * 0.1;
 
-  const availableBalance = totalEarningsWithoutTax - serviceCharge;
+  // const availableBalance = totalEarningsWithoutTax - serviceCharge;
+  const availableBalance = seller?.availableBalance.toFixed(2);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },

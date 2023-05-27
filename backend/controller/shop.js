@@ -275,6 +275,43 @@ router.put(
     })
 );
 
+// update seller password
+router.put(
+    "/update-seller-password",
+    isSeller,
+    catchAsyncErrors(async (req, res, next) => {
+        try {
+            const shop = await Shop.findById(req.seller.id).select("+password");
+            console.log(req.seller.id)
+
+
+            const isPasswordMatched = await shop.comparePassword(
+                req.body.oldPassword
+            );
+
+            if (!isPasswordMatched) {
+                return next(new ErrorHandler("Old password is incorrect!", 400));
+            }
+
+            if (req.body.newPassword !== req.body.confirmPassword) {
+                return next(
+                    new ErrorHandler("newPassword and confirm passwords are not match!", 400)
+                );
+            }
+            shop.password = req.body.newPassword;
+
+            await shop.save();
+
+            res.status(200).json({
+                success: true,
+                message: "Password updated successfully!",
+            });
+        } catch (error) {
+            return next(new ErrorHandler(error.message, 500));
+        }
+    })
+);
+
 // all sellers --- for admin
 router.get("/admin-all-sellers", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
     try {

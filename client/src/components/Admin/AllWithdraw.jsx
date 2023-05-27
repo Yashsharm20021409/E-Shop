@@ -14,18 +14,18 @@ const AllWithdraw = () => {
   const [withdrawData, setWithdrawData] = useState();
   const [withdrawStatus, setWithdrawStatus] = useState("Processing");
 
-//   useEffect(() => {
-//     axios
-//       .get(`${server}/withdraw/get-all-withdraw-request`, {
-//         withCredentials: true,
-//       })
-//       .then((res) => {
-//         setData(res.data.withdraws);
-//       })
-//       .catch((error) => {
-//         console.log(error.response.data.message);
-//       });
-//   }, []);
+  useEffect(() => {
+    axios
+      .get(`${server}/withdraw/get-all-withdraw-request`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setData(res.data.withdraws);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  }, []);
 
   const columns = [
     { field: "id", headerName: "Withdraw Id", minWidth: 150, flex: 0.7 },
@@ -91,6 +91,7 @@ const AllWithdraw = () => {
         { withCredentials: true }
       )
       .then((res) => {
+        window.location.reload()
         toast.success("Withdraw request updated successfully!");
         setData(res.data.withdraws);
         setOpen(false);
@@ -99,8 +100,7 @@ const AllWithdraw = () => {
 
   const row = [];
 
-  data &&
-    data.forEach((item) => {
+  data && data.forEach((item) => {
       row.push({
         id: item._id,
         shopId: item.seller._id,
@@ -109,14 +109,15 @@ const AllWithdraw = () => {
         status: item.status,
         createdAt: item.createdAt.slice(0, 10),
       });
-    });
+  });
+
   return (
     <div className="w-full flex items-center pt-5 justify-center">
       <div className="w-[95%] bg-white">
         <DataGrid
           rows={row}
           columns={columns}
-          pageSize={10}
+          pageSize={6}
           disableSelectionOnClick
           autoHeight
         />
@@ -124,7 +125,7 @@ const AllWithdraw = () => {
       {open && (
         <div className="w-full fixed h-screen top-0 left-0 bg-[#00000031] z-[9999] flex items-center justify-center">
           <div className="w-[50%] min-h-[40vh] bg-white rounded shadow p-4">
-            <div className="flex justify-end w-full">
+            <div className="flex justify-end w-full cursor-pointer">
               <RxCross1 size={25} onClick={() => setOpen(false)} />
             </div>
             <h1 className="text-[25px] text-center font-Poppins">

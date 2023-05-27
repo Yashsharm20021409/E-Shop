@@ -26,20 +26,20 @@ const WithdrawMoney = () => {
     bankAddress: "",
   });
 
-  const [deliverOrder, setDeliverOrder] = useState(null);
+  // const [deliverOrder, setDeliverOrder] = useState(null);
 
   useEffect(() => {
     dispatch(getAllProductsShop(seller._id));
     const ord = orders && orders.filter((item) => item.status === "Delivered");
-    setDeliverOrder(ord);
+    // setDeliverOrder(ord);
   }, [dispatch]);
 
-  const totalEarningsWithoutTax =
-    deliverOrder &&
-    deliverOrder.reduce((acc, item) => acc + item.totalPrice, 0);
-  const serviceCharge = totalEarningsWithoutTax * 0.1;
+  // const totalEarningsWithoutTax =
+  //   deliverOrder &&
+  //   deliverOrder.reduce((acc, item) => acc + item.totalPrice, 0);
+  // const serviceCharge = totalEarningsWithoutTax * 0.1;
 
-  const availableBalance = totalEarningsWithoutTax - serviceCharge;
+  // const availableBalance = totalEarningsWithoutTax - serviceCharge;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,12 +108,13 @@ const WithdrawMoney = () => {
           { withCredentials: true }
         )
         .then((res) => {
+          // window.location.reload();
           toast.success("Withdraw money request is successful!");
         });
     }
   };
 
-  // const availableBalance = seller?.availableBalance;
+  const availableBalance = seller?.availableBalance;
 
   return (
     <div className="w-full h-[90vh] p-8">

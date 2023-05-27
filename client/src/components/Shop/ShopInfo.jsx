@@ -112,6 +112,17 @@ const ShopInfo = ({ isOwner }) => {
               </div>
             </div>
           )}
+          <Link to="/ForgetPass">
+            <div className="py-3 px-4">
+              <div
+                className={`${styles.button} !w-full !h-[42px] !rounded-[5px]`}
+                // onClick={changePassword}
+              >
+                <span className="text-white">Change Password</span>
+              </div>
+            </div>
+          </Link>
+
           <Link to={"/"}>
             <div className="py-3 px-4">
               <div

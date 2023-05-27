@@ -72,13 +72,13 @@ router.get(
 
 // delete event of a shop
 router.delete(
-    "/delete-shop-event/:id", isSeller,
+    "/delete-shop-event/:id",
     catchAsyncErrors(async (req, res, next) => {
         try {
             const productId = req.params.id;
 
             const eventData = await Event.findById(productId);
-            
+
             // to remove file from local storage
             eventData.images.forEach((imageUrl) => {
                 const filename = imageUrl;
@@ -108,16 +108,16 @@ router.delete(
 );
 
 // all events for admin
-router.get("/admin-all-events",isAuthenticated,isAdmin("Admin"),catchAsyncErrors(async(req,res,next)=>{
+router.get("/admin-all-events", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
     try {
-        const events = await Event.find().sort({createdAt:-1});
+        const events = await Event.find().sort({ createdAt: -1 });
 
         res.status(201).json({
-            success:true,
+            success: true,
             events
         });
     } catch (error) {
-        return next(new ErrorHandler(error.message,500));
+        return next(new ErrorHandler(error.message, 500));
     }
 }))
 

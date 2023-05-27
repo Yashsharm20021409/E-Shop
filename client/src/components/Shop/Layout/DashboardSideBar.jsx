@@ -8,6 +8,7 @@ import { CiMoneyBill, CiSettings } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { HiOutlineReceiptRefund } from "react-icons/hi";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const DashboardSideBar = ({ active }) => {
   return (
@@ -191,8 +192,24 @@ const DashboardSideBar = ({ active }) => {
           </h5>
         </Link>
       </div>
+
+      {/* <div className="w-full flex items-center p-4">
+        <Link to="/settings" className="w-full flex items-center">
+          <RiLockPasswordLine
+            size={30}
+            color={`${active === 12 ? "#1e5556" : "#56d879"}`}
+          />
+          <h5
+            className={`max-md:hidden pl-2 text-[18px] font-[400] ${
+              active === 11 ? "text-[#56d879]" : "text-[#1e5556]"
+            }`}
+          >
+            Change password
+          </h5>
+        </Link>
+      </div> */}
     </div>
   );
-};
+}; 
 
 export default DashboardSideBar;

@@ -30,8 +30,8 @@ const ShopProfileData = ({ isOwner }) => {
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <div className="w-full flex max-md:flex-col max-md:mt-4 ">
+      <div className="flex w-full items-center justify-between max-md:flex-col">
+        <div className="w-full flex max-md:flex-col max-md:mt-4 max-md:items-center">
           <div className="flex items-center" onClick={() => setActive(1)}>
             <h5
               className={`font-[600] text-[20px] ${
@@ -63,7 +63,7 @@ const ShopProfileData = ({ isOwner }) => {
         </div>
         <div>
           {isOwner && (
-            <div>
+            <div className="max-md:mr-5">
               <Link to="/dashboard">
                 <div className={`${styles.button} !rounded-[4px] h-[42px]`}>
                   <span className="text-[#fff]">Go Dashboard</span>

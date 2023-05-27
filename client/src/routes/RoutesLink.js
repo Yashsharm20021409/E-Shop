@@ -16,7 +16,8 @@ import SellerActivationPage  from "../pages/SellerActivationPage"
 import ShopLoginPage from "../pages/ShopLoginPage"
 import OrderDetailsPage from "../pages/OrderDetailsPage"
 import TrackOrderPage from "../pages/TrackOrderPage"
-import UserInbox from "../pages/UserInbox.jsx"
+import UserInbox from "../pages/UserInbox"
+import ForgetPass from "../pages/ForgetPass"
 
 
 // if we did export insted of export default we have to import all in {} where we want to use them
@@ -39,5 +40,6 @@ export {
     ShopLoginPage,
     OrderDetailsPage,
     TrackOrderPage,
-    UserInbox
+    UserInbox,
+    ForgetPass
 }

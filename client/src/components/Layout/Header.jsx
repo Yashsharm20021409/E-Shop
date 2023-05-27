@@ -294,32 +294,34 @@ const Header = ({ activeHeading }) => {
                 />
                 {searchData && searchData.length !== 0 ? (
                   <div className="absolute bg-[#fff] z-10 shadow w-full left-0 p-3">
-                    {searchData&& searchData.map((i) => {
-                      // const d = i.name;
+                    {searchData &&
+                      searchData.map((i) => {
+                        // const d = i.name;
 
-                      // const Product_name = d.replace(/\s+/g, "-");
-                      return (
-                        <Link to={`/product/${i._id}`}>
-                          <div className="flex items-center">
-                            <img
-                              src={`${backend_url}${i.images[0]}`}
-                              alt=""
-                              className="w-[50px] mr-2"
-                            />
-                            <h5>{i.name}</h5>
-                          </div>
-                        </Link>
-                      );
-                    })}
+                        // const Product_name = d.replace(/\s+/g, "-");
+                        return (
+                          <Link to={`/product/${i._id}`}>
+                            <div className="flex items-center">
+                              <img
+                                src={`${backend_url}${i.images[0]}`}
+                                alt=""
+                                className="w-[50px] mr-2"
+                              />
+                              <h5>{i.name}</h5>
+                            </div>
+                          </Link>
+                        );
+                      })}
                   </div>
-                ):null}
+                ) : null}
               </div>
 
               <Navbar active={activeHeading} />
               <div className={`${styles.button} ml-4 !rounded-[4px]`}>
-                <Link to="/shop-create">
+                <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
                   <h1 className="text-[#fff] flex items-center">
-                    Become Seller <IoIosArrowForward className="ml-1" />
+                    {isSeller ? "Go Dashboard" : "Become Seller"}{" "}
+                    <IoIosArrowForward className="ml-1" />
                   </h1>
                 </Link>
               </div>

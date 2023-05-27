@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { LoginPage, ShopLoginPage, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage, OrderDetailsPage, TrackOrderPage, UserInbox } from "./routes/RoutesLink"
+import { LoginPage, ShopLoginPage,ForgetPass, SignupPage, ActivationPage, SellerActivationPage, HomePage, ProductDetailsPage, ProductsPage, BestSellingPage, EventsPage, FAQPage, ProfilePage, CheckoutPage, PaymentPage, OrderSuccessPage, ShopCreatePage, OrderDetailsPage, TrackOrderPage, UserInbox } from "./routes/RoutesLink"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -116,6 +116,7 @@ function App() {
         <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         <Route path="/shop-create" element={<ShopCreatePage />}></Route>
         <Route path="/shop-login" element={<ShopLoginPage />}></Route>
+        <Route path="/forgetPass" element={<ForgetPass />}></Route>
         <Route
           path="/shop/:id"
           element={
