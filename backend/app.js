@@ -15,22 +15,25 @@ app.use(cookieParser());
 // if from this url we get any req our cookies get store that why we use this
 app.use(
     cors({
-      origin: "http://localhost:3000",
-      credentials: true,
+        origin: "http://localhost:3000",
+        credentials: true,
     })
 );
 
 // to upload avatar and to access the uploads folder globally
-app.use("/",express.static("uploads"))
+app.use("/", express.static("uploads"))
+app.use("/test", (req, res) => {
+    res.send("Hello world!");
+});
 // Body-parser parses is an HTTP request body that usually helps when you need to know more than just the URL being hit. Specifically in the context of a POST, PATCH, or PUT HTTP request where the information you want is contained in the body. Using body-parser allows you to access req.
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 
 
 // Config
-if(process.env.NODE_ENV !== "PRODUCTION"){ 
+if (process.env.NODE_ENV !== "PRODUCTION") {
     require("dotenv").config({
-        path:"backend/config/.env"
+        path: "config/.env"
     })
 }
 
@@ -47,16 +50,16 @@ const conversation = require("./controller/conversation")
 const message = require("./controller/message")
 const withdraw = require("./controller/withdraw")
 
-app.use("/api/v2/user",user);
-app.use("/api/v2/shop",shop);
-app.use("/api/v2/product",product); 
-app.use("/api/v2/event",event);
-app.use("/api/v2/coupon",coupon);
-app.use("/api/v2/payment",payment);
-app.use("/api/v2/order",order);
-app.use("/api/v2/conversation",conversation);
-app.use("/api/v2/message",message);
-app.use("/api/v2/withdraw",withdraw);
+app.use("/api/v2/user", user);
+app.use("/api/v2/shop", shop);
+app.use("/api/v2/product", product);
+app.use("/api/v2/event", event);
+app.use("/api/v2/coupon", coupon);
+app.use("/api/v2/payment", payment);
+app.use("/api/v2/order", order);
+app.use("/api/v2/conversation", conversation);
+app.use("/api/v2/message", message);
+app.use("/api/v2/withdraw", withdraw);
 
 // it's for ErrorHandling
 app.use(ErrorHandler);
