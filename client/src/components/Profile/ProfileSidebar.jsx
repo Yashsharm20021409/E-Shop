@@ -25,7 +25,7 @@ const ProfileSidebar = ({ setActive, active }) => {
         toast.success(res.data.message);
         // used before navigate otherwise you back click back page arrow again you see you are still logged in
         navigate("/login");
-        window.location.reload(true);
+        // window.location.reload(true);
       })
       .catch((error) => {
         console.log(error.response.data.message);
