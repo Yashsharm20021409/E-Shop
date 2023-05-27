@@ -22,7 +22,7 @@ app.use(
 
 // to upload avatar and to access the uploads folder globally
 app.use("/", express.static("uploads"))
-app.use("/test", (req, res) => {
+app.use("/", (req, res) => {
     res.send("Hello world!");
 });
 // Body-parser parses is an HTTP request body that usually helps when you need to know more than just the URL being hit. Specifically in the context of a POST, PATCH, or PUT HTTP request where the information you want is contained in the body. Using body-parser allows you to access req.
