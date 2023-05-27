@@ -110,8 +110,6 @@ const ShopInfo = ({ isOwner }) => {
               >
                 <span className="text-white">Log Out</span>
               </div>
-            </div>
-          )}
           <Link to="/ForgetPass">
             <div className="py-3 px-4">
               <div
@@ -122,6 +120,8 @@ const ShopInfo = ({ isOwner }) => {
               </div>
             </div>
           </Link>
+            </div>
+          )}
 
           <Link to={"/"}>
             <div className="py-3 px-4">
