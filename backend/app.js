@@ -15,7 +15,7 @@ app.use(cookieParser());
 // if from this url we get any req our cookies get store that why we use this
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: "https://e-shop-87bh.vercel.app/",
         credentials: true,
     })
 );
